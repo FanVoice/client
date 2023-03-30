@@ -7,7 +7,6 @@
     "type": "git",
     "url": "https://github.com/FanVoice/client"
   },
-  "homepage": "https://github.com/FanVoice/client",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

@@ -1,12 +1,12 @@
-import { createHashRouter } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 import { Root } from '../pages/Root';
 import { Error } from '../pages/Error';
 import { Main } from '../pages/Main';
 
-export const router = createHashRouter(
+export const router = createBrowserRouter(
     [
         {
-            path: '/*',
+            path: '/',
             element: <Root />,
             errorElement: <Error />,
             children: [

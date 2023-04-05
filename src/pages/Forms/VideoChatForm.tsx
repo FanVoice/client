@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import {
@@ -10,11 +12,21 @@ import {
     Button,
     NumberInputField,
     Checkbox,
-    NumberInput, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper
+    NumberInput,
+    NumberInputStepper,
+    NumberIncrementStepper,
+    NumberDecrementStepper,
 } from '@chakra-ui/react';
 import { Form } from 'react-router-dom';
-import { useRootContext } from "../../contexts/rootContext";
-import { formBoxStyles, formTextStyles, formButtonStyles, formDisabledButtonStyles } from '../../utils/styles';
+import { useTgWebAppContext } from '../../contexts/tgContext';
+import {
+    formBoxStyles,
+    formTextStyles,
+    formButtonStyles,
+    formDisabledButtonStyles,
+} from './styles';
+
+import { errorMessages } from '../../utils/constants';
 
 type FormInputs = {
     name: string;
@@ -22,11 +34,24 @@ type FormInputs = {
     duration: number;
     durationForOne: number;
     organizer: string;
-}
+};
+
+const strings = {
+    title: 'Создать видеочат',
+    name: 'Название',
+    dateTime: 'Дата и время проведения',
+    duration: 'Длительность видеочата (в минутах)',
+    durationForOne: 'Длительность для одного участника (в минутах)',
+    checkbox: 'Мероприятие провожу не я',
+    organizer: 'Кто будет орзанизатором мероприятия?',
+    tgPlaceholder: '@Telegram-username',
+    namePlaceholder: 'Название видеочата (до 255 символов)'
+};
 
 export const VideoChatForm = () => {
-    const rootContext = useRootContext();
+    const tgContext = useTgWebAppContext();
     const [isChecked, setIsChecked] = useState<boolean>(false);
+    const minDate = new Date().toISOString().slice(0, 16);
     const {
         register,
         reset,
@@ -43,120 +68,197 @@ export const VideoChatForm = () => {
 
     const onFormSubmit = (data: FormInputs) => {
         // если организатор не указан - достаем его из объекта Telegram
-        console.log(data);
         if (!data.organizer) {
-            data.organizer = rootContext.tg.initDataUnsafe.user.username;
+            data.organizer = tgContext.tg.initDataUnsafe.user.username;
         }
-        rootContext.tg.sendData(JSON.stringify(data))
-    }
+        tgContext.tg.sendData(JSON.stringify(data));
+    };
 
-    const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleCheckboxChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
         setIsChecked(event.target.checked);
-        // Если галочка стояла, но пользователь передумал - 
+        // Если галочка стояла, но пользователь передумал -
         // откатываем поле организатор до значения текущего пользователя
         if (isChecked) {
-            reset({ organizer: rootContext.tg.initDataUnsafe.user.username })
+            reset({ organizer: tgContext.tg.initDataUnsafe.user.username });
         }
-    }
+    };
 
-    return (<Box sx={formBoxStyles} >
-        <Form onSubmit={handleSubmit(onFormSubmit)} style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-            <Box >
-                <Heading as='h2' size='md' mb={'25px'} mt='15px'>Создать видеочат</Heading>
-                <FormControl mb='20px' isInvalid={!!errors.name && touchedFields.name}>
-                    <FormLabel sx={formTextStyles}>Название</FormLabel>
-                    <Input sx={formTextStyles} {...register('name', {
-                        required: 'Поле обязательно к заполнению',
-                        minLength: {
-                            value: 2,
-                            message: 'Минимум 2 символа',
-                        },
-                        maxLength: {
-                            value: 255,
-                            message: 'Максимум 255 символов',
-                        },
-                    })}
-                        type='text'
-                        placeholder='Название видеочата (до 255 символов)' />
-                    {errors.name && (
-                        <FormErrorMessage>{errors.name.message}</FormErrorMessage>
-                    )}
-                </FormControl>
-                <FormControl mb='20px' isInvalid={!!errors.datetime && touchedFields.datetime}>
-                    <FormLabel sx={formTextStyles}>Дата и время проведения</FormLabel>
-                    <Input colorScheme="orange" focusBorderColor='orange' sx={formTextStyles} {...register('datetime', {
-                        required: 'Поле обязательно к заполнению',
-                    })}
-                        min={new Date().toISOString().slice(0, 16)}
-                        type="datetime-local" />
-                    {errors.datetime && (
-                        <FormErrorMessage>{errors?.datetime.message}</FormErrorMessage>
-                    )}
-                </FormControl>
-                <FormControl mb='20px' isInvalid={!!errors.duration && touchedFields.duration}>
-                    <FormLabel sx={formTextStyles}>Длительность видеочата (в минутах)</FormLabel>
-                    {
-                        // @ts-ignore
-                    }
-                    <NumberInput defaultValue={30} sx={formTextStyles} {...register('duration', {
-                        pattern: {
-                            value: /^[0-9]*$/,
-                            message: 'Введите числовое значение'
-                        },
-                        required: 'Поле обязательно к заполнению',
-                    })}
+    return (
+        <Box sx={formBoxStyles}>
+            <Form
+                onSubmit={handleSubmit(onFormSubmit)}
+                style={{
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                }}
+            >
+                <Box>
+                    <Heading as="h2" size="md" mb={'25px'} mt="15px">
+                        {strings.title}
+                    </Heading>
+                    <FormControl
+                        mb="20px"
+                        isInvalid={!!errors.name && touchedFields.name}
                     >
-                        <NumberInputField />
-                        <NumberInputStepper>
-                            <NumberIncrementStepper />
-                            <NumberDecrementStepper />
-                        </NumberInputStepper>
-                    </NumberInput>
-                    {errors.duration && (
-                        <FormErrorMessage>{errors?.duration.message}</FormErrorMessage>
-                    )}
-                </FormControl>
-                <FormControl mb='20px' isInvalid={!!errors.durationForOne && touchedFields.durationForOne}>
-                    <FormLabel sx={formTextStyles}>Длительность для одного участника (в минутах)</FormLabel>
-                    <NumberInput defaultValue={30} sx={formTextStyles} {...register('durationForOne', {
-                        pattern: {
-                            value: /^[0-9]*$/,
-                            message: 'Введите числовое значение'
-                        },
-                        required: 'Поле обязательно к заполнению',
-                    })}
-                    >
-                        <NumberInputField />
-                        <NumberInputStepper>
-                            <NumberIncrementStepper />
-                            <NumberDecrementStepper />
-                        </NumberInputStepper>
-                    </NumberInput>
-                    {errors.durationForOne && (
-                        <FormErrorMessage>{errors?.durationForOne.message}</FormErrorMessage>
-                    )}
-                </FormControl>
-                <FormControl mb='20px' display="flex" alignItems="center">
-                    <Checkbox colorScheme="orange" isChecked={isChecked} onChange={handleCheckboxChange} />
-                    <FormLabel sx={formTextStyles} m='0' ml='10px'>Мероприятие провожу не я</FormLabel>
-
-                </FormControl>
-                {isChecked && (
-                    <FormControl mb='20px' isInvalid={!!errors.organizer && touchedFields.organizer}>
-                        <FormLabel sx={formTextStyles}>Кто будет орзанизатором мероприятия?</FormLabel>
-                        <Input sx={formTextStyles} {...register('organizer', {
-                            required: 'Поле обязательно к заполнению',
-                        })}
+                        <FormLabel sx={formTextStyles}>
+                            {strings.name}
+                        </FormLabel>
+                        <Input
+                            sx={formTextStyles}
+                            {...register('name', {
+                                required: errorMessages.required,
+                                minLength: {
+                                    value: 2,
+                                    message: errorMessages.min,
+                                },
+                                maxLength: {
+                                    value: 255,
+                                    message:  errorMessages.max,
+                                },
+                            })}
                             type="text"
-                            placeholder='@Telegram-username' />
-                        {errors.organizer && (
-                            <FormErrorMessage>{errors?.organizer.message}</FormErrorMessage>
+                            placeholder={strings.namePlaceholder}
+                        />
+                        {errors.name && (
+                            <FormErrorMessage>
+                                {errors.name.message}
+                            </FormErrorMessage>
                         )}
                     </FormControl>
-                )}
-            </Box>
-            <Button type='submit' sx={isValid ? formButtonStyles : formDisabledButtonStyles} m='auto 0 10px 0'>Создать</Button>
-        </Form>
-    </Box >
-    )
-}
+                    <FormControl
+                        mb="20px"
+                        isInvalid={!!errors.datetime && touchedFields.datetime}
+                    >
+                        <FormLabel sx={formTextStyles}>
+                            {strings.dateTime}
+                        </FormLabel>
+                        <Input
+                            colorScheme="orange"
+                            focusBorderColor="orange"
+                            sx={formTextStyles}
+                            {...register('datetime', {
+                                required: errorMessages.required,
+                            })}
+                            min={minDate}
+                            type="datetime-local"
+                        />
+                        {errors.datetime && (
+                            <FormErrorMessage>
+                                {errors?.datetime.message}
+                            </FormErrorMessage>
+                        )}
+                    </FormControl>
+                    <FormControl
+                        mb="20px"
+                        isInvalid={!!errors.duration && touchedFields.duration}
+                    >
+                        <FormLabel sx={formTextStyles}>
+                            {strings.duration}
+                        </FormLabel>
+                        <NumberInput
+                            defaultValue={30}
+                            sx={formTextStyles}
+                            {...register('duration', {
+                                pattern: {
+                                    value: /^[0-9]*$/,
+                                    message: errorMessages.useNumber,
+                                },
+                                required: errorMessages.required,
+                            })}
+                        >
+                            <NumberInputField />
+                            <NumberInputStepper>
+                                <NumberIncrementStepper />
+                                <NumberDecrementStepper />
+                            </NumberInputStepper>
+                        </NumberInput>
+                        {errors.duration && (
+                            <FormErrorMessage>
+                                {errors?.duration.message}
+                            </FormErrorMessage>
+                        )}
+                    </FormControl>
+                    <FormControl
+                        mb="20px"
+                        isInvalid={
+                            !!errors.durationForOne &&
+                            touchedFields.durationForOne
+                        }
+                    >
+                        <FormLabel sx={formTextStyles}>
+                            {strings.durationForOne}
+                        </FormLabel>
+                        <NumberInput
+                            defaultValue={30}
+                            sx={formTextStyles}
+                            {...register('durationForOne', {
+                                pattern: {
+                                    value: /^[0-9]*$/,
+                                    message: errorMessages.useNumber,
+                                },
+                                required: errorMessages.required,
+                            })}
+                        >
+                            <NumberInputField />
+                            <NumberInputStepper>
+                                <NumberIncrementStepper />
+                                <NumberDecrementStepper />
+                            </NumberInputStepper>
+                        </NumberInput>
+                        {errors.durationForOne && (
+                            <FormErrorMessage>
+                                {errors?.durationForOne.message}
+                            </FormErrorMessage>
+                        )}
+                    </FormControl>
+                    <FormControl mb="20px" display="flex" alignItems="center">
+                        <Checkbox
+                            colorScheme="orange"
+                            isChecked={isChecked}
+                            onChange={handleCheckboxChange}
+                        />
+                        <FormLabel sx={formTextStyles} m="0" ml="10px">
+                            {strings.checkbox}
+                        </FormLabel>
+                    </FormControl>
+                    {isChecked && (
+                        <FormControl
+                            mb="20px"
+                            isInvalid={
+                                !!errors.organizer && touchedFields.organizer
+                            }
+                        >
+                            <FormLabel sx={formTextStyles}>
+                                {strings.organizer}
+                            </FormLabel>
+                            <Input
+                                sx={formTextStyles}
+                                {...register('organizer', {
+                                    required: errorMessages.required,
+                                })}
+                                type="text"
+                                placeholder={strings.tgPlaceholder}
+                            />
+                            {errors.organizer && (
+                                <FormErrorMessage>
+                                    {errors?.organizer.message}
+                                </FormErrorMessage>
+                            )}
+                        </FormControl>
+                    )}
+                </Box>
+                <Button
+                    type="submit"
+                    sx={isValid ? formButtonStyles : formDisabledButtonStyles}
+                    m="auto 0 10px 0"
+                >
+                    Создать
+                </Button>
+            </Form>
+        </Box>
+    );
+};

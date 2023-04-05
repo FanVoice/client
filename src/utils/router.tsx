@@ -2,8 +2,8 @@ import { createHashRouter } from 'react-router-dom';
 import { Root } from '../pages/Root';
 import { Error } from '../pages/Error';
 import { Main } from '../pages/Main';
-import { RootForm } from '../pages/Forms/RootForm';
-import { VideoChatForm } from '../pages/Forms/VideoChatForm';
+import { RootForm } from '../pages/forms/RootForm';
+import { VideoChatForm } from '../pages/forms/VideoChatForm';
 
 export const router = createHashRouter([
     {
@@ -42,17 +42,11 @@ export const router = createHashRouter([
             {
                 path: '/forms',
                 element: <RootForm />,
-                children: [    {
+                children: [{
                     path: '/forms/video-chat',
                     element: <VideoChatForm />,
                 }]
-                // {
-                //     path: '/categories/clubs:slug',
-                //     element: <h1>Страница спортивного клуба</h1>,
-                // },],
             },
-
-            /** Ну и так далее */
         ],
     },
 ]);

@@ -9,9 +9,9 @@ export type GlobalContent = {
 }
 
 
-export const RootContext = createContext<GlobalContent>({
+export const TgWebAppContext = createContext<GlobalContent>({
   tg: window.Telegram.WebApp
 });
 
 
-export const useRootContext = () => useContext(RootContext)
+export const useTgWebAppContext = () => useContext(TgWebAppContext)

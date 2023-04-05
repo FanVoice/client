@@ -1,15 +1,18 @@
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import { useRootContext } from "../../contexts/rootContext";
+import { useTgWebAppContext } from "../../contexts/tgContext";
+import { TgWebAppContext } from "../../contexts/tgContext";
 
 
 export const RootForm = () => {
-    const rootContext = useRootContext();
+    const tgContext = useTgWebAppContext();
     useEffect(() => {
-        rootContext.tg.ready();
+        tgContext.tg.ready();
     });
 
     return (
-        <Outlet />
+        <TgWebAppContext.Provider value={{ tg: window.Telegram.WebApp }}>
+            <Outlet />
+        </TgWebAppContext.Provider>
     );
 }

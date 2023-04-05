@@ -4,6 +4,8 @@ import { Error } from '../pages/Error';
 import { Main } from '../pages/Main';
 import { RootForm } from '../pages/forms/RootForm';
 import { VideoChatForm } from '../pages/forms/VideoChatForm';
+import { ConferenceForm } from '../pages/forms/ConferenceForm';
+import { OfflineEventForm } from '../pages/forms/OfflineEventForm';
 
 export const router = createHashRouter([
     {
@@ -42,10 +44,20 @@ export const router = createHashRouter([
             {
                 path: '/forms',
                 element: <RootForm />,
-                children: [{
-                    path: '/forms/video-chat',
-                    element: <VideoChatForm />,
-                }]
+                children: [
+                    {
+                        path: '/forms/video-chat',
+                        element: <VideoChatForm />,
+                    },
+                    {
+                        path: '/forms/online-conference',
+                        element: <ConferenceForm />,
+                    },
+                    {
+                        path: '/forms/offline-event',
+                        element: <OfflineEventForm />,
+                    },
+                ],
             },
         ],
     },

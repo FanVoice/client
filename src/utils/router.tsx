@@ -1,7 +1,7 @@
 import { createHashRouter } from 'react-router-dom';
 import { Root } from '../pages/Root';
 import { Error } from '../pages/Error';
-import { Main } from '../pages/Main';
+import { Main } from '../pages/Main/Main';
 import { RootForm } from '../pages/forms/RootForm';
 import { VideoChatForm } from '../pages/forms/VideoChatForm';
 import { ConferenceForm } from '../pages/forms/ConferenceForm';
@@ -17,14 +17,8 @@ export const router = createHashRouter([
                 path: '',
                 element: <Main />,
             },
-            {
-                path: '/all',
-                element: <h1>Все товары</h1>,
-            },
-            {
-                path: '/categories',
-                element: <h1>Категории</h1>,
-            },
+            // Роуты все товары и категории убрала, так как реализовала
+            //все на одной странице ('/') через Tabs
             {
                 path: '/categories/sport',
                 element: <h1>Категория спорта</h1>,

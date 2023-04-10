@@ -27,8 +27,11 @@ import {
     tabPanelCategories,
     iconButtonStyles,
 } from './styles';
+import { useNavigate } from 'react-router-dom';
 
 export const Main = () => {
+    const navigate = useNavigate();
+
     return (
         <VStack>
             <Heading fontSize="xl" mt="13px">
@@ -49,7 +52,7 @@ export const Main = () => {
                             />
                             <IconButton
                                 sx={iconButtonStyles}
-                                aria-label="Search parameters"
+                                aria-label="Фильтр"
                                 icon={<FilterIcon />}
                             />
                         </Box>
@@ -60,10 +63,10 @@ export const Main = () => {
                         </List>
                     </TabPanel>
                     <TabPanel sx={tabPanelCategories}>
-                        <CategoryCard src={sport} title="Виды спорта" />
-                        <CategoryCard src={people} title="Клубы" />
-                        <CategoryCard src={handball} title="Спортсмены" />
-                        <CategoryCard src={youtube} title="Блогеры" />
+                        <CategoryCard src={sport} title="Виды спорта" onClick={() => {navigate('/categories/sports')}}/>
+                        <CategoryCard src={people} title="Клубы" onClick={() => {navigate('/categories/clubs')}} />
+                        <CategoryCard src={handball} title="Спортсмены" onClick={() => {navigate('/categories/athletes')}} />
+                        <CategoryCard src={youtube} title="Блогеры" onClick={() => {navigate('/categories/bloggers')}} />
                     </TabPanel>
                 </TabPanels>
             </Tabs>

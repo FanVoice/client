@@ -3,11 +3,12 @@ import { cardStyles, cardBodyStyles, cardImageStyles, cardHeadingStyles } from '
 
 export type CategoryCardProps = {
     src: string;
-    title: string;
+    title?: string;
+    onClick: () => void;
 };
-export const CategoryCard = ({ src, title }: CategoryCardProps) => {
+export const CategoryCard = ({ src, title, onClick }: CategoryCardProps) => {
     return (
-        <Card sx={cardStyles}>
+        <Card sx={cardStyles} onClick={onClick}>
             <CardBody sx={cardBodyStyles}>
                 <Image src={src} alt={title} sx={cardImageStyles} />
             </CardBody>

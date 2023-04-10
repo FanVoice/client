@@ -6,6 +6,8 @@ import { RootForm } from '../pages/forms/RootForm';
 import { VideoChatForm } from '../pages/forms/VideoChatForm';
 import { ConferenceForm } from '../pages/forms/ConferenceForm';
 import { OfflineEventForm } from '../pages/forms/OfflineEventForm';
+import { Sports } from '../pages/Sports/Sports';
+import { Clubs } from '../pages/Clubs/Clubs';
 
 export const router = createHashRouter([
     {
@@ -20,20 +22,36 @@ export const router = createHashRouter([
             // Роуты все товары и категории убрала, так как реализовала
             //все на одной странице ('/') через Tabs
             {
-                path: '/categories/sport',
-                element: <h1>Категория спорта</h1>,
+                path: '/categories/sports',
+                element: <Sports />,
             },
             {
-                path: '/categories/sport/:slug',
+                path: '/categories/sports/:slug',
                 element: <h1>Страница определенного спорта</h1>,
             },
             {
                 path: '/categories/clubs',
-                element: <h1>Спортивные клубы</h1>,
+                element: <Clubs />,
             },
             {
                 path: '/categories/clubs:slug',
                 element: <h1>Страница спортивного клуба</h1>,
+            },
+            {
+                path: '/categories/athletes',
+                element: <h1>Спортсмены</h1>,
+            },
+            {
+                path: '/categories/athletes:slug',
+                element: <h1>Страница спортсмена</h1>,
+            },
+            {
+                path: '/categories/bloggers',
+                element: <h1>Блоггеры</h1>,
+            },
+            {
+                path: '/categories/bloggers:slug',
+                element: <h1>Страница блоггера</h1>,
             },
             {
                 path: '/forms',

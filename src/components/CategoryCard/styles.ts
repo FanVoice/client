@@ -5,6 +5,7 @@ export const cardStyles = {
     flexDir: 'column',
     alignItems: 'center',
     gap: '20px',
+    cursor: 'pointer',
 };
 
 export const cardImageStyles = {

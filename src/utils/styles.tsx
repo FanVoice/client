@@ -8,8 +8,8 @@ export const goBackButtonStyles = {
     width: '24px',
     height: '24px',
     _hover: {
-        background: 'transparent'
-    }
+        background: 'transparent',
+    },
 };
 
 export const categoriesContainerStyles = {

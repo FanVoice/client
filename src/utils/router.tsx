@@ -4,6 +4,7 @@ import { Error } from '../pages/Error';
 import { Main } from '../pages/Main';
 import { RootForm } from '../pages/forms/RootForm';
 import { VideoChatForm } from '../pages/forms/VideoChatForm';
+import { AuthletsList } from '../pages/AuthletsList/AuthletsList';
 
 export const router = createHashRouter([
     {
@@ -36,16 +37,22 @@ export const router = createHashRouter([
                 element: <h1>Спортивные клубы</h1>,
             },
             {
+                path: '/categories/authlets',
+                element: <AuthletsList />,
+            },
+            {
                 path: '/categories/clubs:slug',
                 element: <h1>Страница спортивного клуба</h1>,
             },
             {
                 path: '/forms',
                 element: <RootForm />,
-                children: [{
-                    path: '/forms/video-chat',
-                    element: <VideoChatForm />,
-                }]
+                children: [
+                    {
+                        path: '/forms/video-chat',
+                        element: <VideoChatForm />,
+                    },
+                ],
             },
         ],
     },

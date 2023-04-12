@@ -1,10 +1,14 @@
 import { createHashRouter } from 'react-router-dom';
 import { Root } from '../pages/Root';
 import { Error } from '../pages/Error';
-import { Main } from '../pages/Main';
+import { Main } from '../pages/Main/Main';
 import { RootForm } from '../pages/forms/RootForm';
 import { VideoChatForm } from '../pages/forms/VideoChatForm';
 import { AuthletsList } from '../pages/AuthletsList/AuthletsList';
+import { ConferenceForm } from '../pages/forms/ConferenceForm';
+import { OfflineEventForm } from '../pages/forms/OfflineEventForm';
+import { Sports } from '../pages/Sports/Sports';
+import { Clubs } from '../pages/Clubs/Clubs';
 
 export const router = createHashRouter([
     {
@@ -16,25 +20,19 @@ export const router = createHashRouter([
                 path: '',
                 element: <Main />,
             },
+            // Роуты все товары и категории убрала, так как реализовала
+            //все на одной странице ('/') через Tabs
             {
-                path: '/all',
-                element: <h1>Все товары</h1>,
+                path: '/categories/sports',
+                element: <Sports />,
             },
             {
-                path: '/categories',
-                element: <h1>Категории</h1>,
-            },
-            {
-                path: '/categories/sport',
-                element: <h1>Категория спорта</h1>,
-            },
-            {
-                path: '/categories/sport/:slug',
+                path: '/categories/sports/:slug',
                 element: <h1>Страница определенного спорта</h1>,
             },
             {
                 path: '/categories/clubs',
-                element: <h1>Спортивные клубы</h1>,
+                element: <Clubs />,
             },
             {
                 path: '/categories/authlets',
@@ -45,12 +43,36 @@ export const router = createHashRouter([
                 element: <h1>Страница спортивного клуба</h1>,
             },
             {
+                path: '/categories/athletes',
+                element: <h1>Спортсмены</h1>,
+            },
+            {
+                path: '/categories/athletes:slug',
+                element: <h1>Страница спортсмена</h1>,
+            },
+            {
+                path: '/categories/bloggers',
+                element: <h1>Блоггеры</h1>,
+            },
+            {
+                path: '/categories/bloggers:slug',
+                element: <h1>Страница блоггера</h1>,
+            },
+            {
                 path: '/forms',
                 element: <RootForm />,
                 children: [
                     {
                         path: '/forms/video-chat',
                         element: <VideoChatForm />,
+                    },
+                    {
+                        path: '/forms/online-conference',
+                        element: <ConferenceForm />,
+                    },
+                    {
+                        path: '/forms/offline-event',
+                        element: <OfflineEventForm />,
                     },
                 ],
             },

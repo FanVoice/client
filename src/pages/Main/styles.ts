@@ -2,7 +2,8 @@ export const tabsStyles = {
     colorScheme: 'orange',
     position: 'relative',
     variant: 'unstyled',
-    width: '328px',
+    width: '84%',
+    minWidth: '328px',
 };
 
 export const tabListStyles = {

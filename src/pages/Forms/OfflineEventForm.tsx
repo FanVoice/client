@@ -72,6 +72,7 @@ export const OfflineEventForm = () => {
             data.organizer = tgContext.tg.initDataUnsafe.user.username;
         }
         tgContext.tg.sendData(JSON.stringify(data));
+        reset();
     };
 
     const handleCheckboxChange = (

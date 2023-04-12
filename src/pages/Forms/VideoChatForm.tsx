@@ -45,7 +45,7 @@ const strings = {
     checkbox: 'Мероприятие провожу не я',
     organizer: 'Кто будет орзанизатором мероприятия?',
     tgPlaceholder: '@Telegram-username',
-    namePlaceholder: 'Название видеочата'
+    namePlaceholder: 'Название видеочата',
 };
 
 export const VideoChatForm = () => {
@@ -72,6 +72,7 @@ export const VideoChatForm = () => {
             data.organizer = tgContext.tg.initDataUnsafe.user.username;
         }
         tgContext.tg.sendData(JSON.stringify(data));
+        reset();
     };
 
     const handleCheckboxChange = (
@@ -117,7 +118,7 @@ export const VideoChatForm = () => {
                                 },
                                 maxLength: {
                                     value: 255,
-                                    message:  errorMessages.max,
+                                    message: errorMessages.max,
                                 },
                             })}
                             type="text"

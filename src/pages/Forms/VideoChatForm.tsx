@@ -45,7 +45,11 @@ const strings = {
     checkbox: 'Мероприятие провожу не я',
     organizer: 'Кто будет орзанизатором мероприятия?',
     tgPlaceholder: '@Telegram-username',
+<<<<<<< HEAD
     namePlaceholder: 'Название видеочата',
+=======
+    namePlaceholder: 'Название видеочата (до 255 символов)',
+>>>>>>> 9b5d0c87ddca57676e81cd6f07fe7d92983b11f2
 };
 
 export const VideoChatForm = () => {

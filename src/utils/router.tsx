@@ -4,11 +4,13 @@ import { Error } from '../pages/Error';
 import { Main } from '../pages/Main/Main';
 import { RootForm } from '../pages/forms/RootForm';
 import { VideoChatForm } from '../pages/forms/VideoChatForm';
-import { AuthletsList } from '../pages/AuthletsList/AuthletsList';
+import { Authlets } from '../pages/Authlets';
 import { ConferenceForm } from '../pages/forms/ConferenceForm';
 import { OfflineEventForm } from '../pages/forms/OfflineEventForm';
 import { Sports } from '../pages/Sports/Sports';
 import { Clubs } from '../pages/Clubs/Clubs';
+import { Bloggers } from '../pages/Bloggers';
+import Authlet from '../pages/Authlet/Authlet';
 
 export const router = createHashRouter([
     {
@@ -31,28 +33,24 @@ export const router = createHashRouter([
                 element: <h1>Страница определенного спорта</h1>,
             },
             {
-                path: '/categories/clubs',
-                element: <Clubs />,
+                path: '/categories/authlets',
+                element: <Authlets />,
             },
             {
-                path: '/categories/authlets',
-                element: <AuthletsList />,
+                path: '/categories/authlets:slug',
+                element: <Authlet />,
+            },
+            {
+                path: '/categories/clubs',
+                element: <Clubs />,
             },
             {
                 path: '/categories/clubs:slug',
                 element: <h1>Страница спортивного клуба</h1>,
             },
             {
-                path: '/categories/athletes',
-                element: <h1>Спортсмены</h1>,
-            },
-            {
-                path: '/categories/athletes:slug',
-                element: <h1>Страница спортсмена</h1>,
-            },
-            {
                 path: '/categories/bloggers',
-                element: <h1>Блоггеры</h1>,
+                element: <Bloggers />,
             },
             {
                 path: '/categories/bloggers:slug',

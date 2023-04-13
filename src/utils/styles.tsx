@@ -22,3 +22,21 @@ export const categoriesContainerStyles = {
     maxWidth: '100%',
     marginTop: '26px !important',
 };
+
+export const h2TitleStyles = {
+    fontSize: 'xl',
+    mt: '13px',
+};
+
+export const h2TitleWithButtonStyles = {
+    fontSize: 'xl',
+    mt: '13px',
+    position: 'relative',
+    width: '328px',
+    textAlign: 'center',
+};
+
+export const paragrapghStyles = {
+    fontSize: 'sm',
+    fontWeight: 'normal',
+}

@@ -28,13 +28,14 @@ import {
     iconButtonStyles,
 } from './styles';
 import { useNavigate } from 'react-router-dom';
+import { h2TitleStyles } from '../../utils/styles';
 
 export const Main = () => {
     const navigate = useNavigate();
 
     return (
         <VStack>
-            <Heading fontSize="xl" mt="13px">
+            <Heading sx={h2TitleStyles}>
                 Маркетплейс
             </Heading>
             <Tabs sx={tabsStyles}>
@@ -65,7 +66,7 @@ export const Main = () => {
                     <TabPanel sx={tabPanelCategories}>
                         <CategoryCard src={sport} title="Виды спорта" onClick={() => {navigate('/categories/sports')}}/>
                         <CategoryCard src={people} title="Клубы" onClick={() => {navigate('/categories/clubs')}} />
-                        <CategoryCard src={handball} title="Спортсмены" onClick={() => {navigate('/categories/athletes')}} />
+                        <CategoryCard src={handball} title="Спортсмены" onClick={() => {navigate('/categories/authlets')}} />
                         <CategoryCard src={youtube} title="Блогеры" onClick={() => {navigate('/categories/bloggers')}} />
                     </TabPanel>
                 </TabPanels>

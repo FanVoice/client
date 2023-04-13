@@ -1,5 +1,7 @@
 export const cardStyles = {
-    height: '293px',
+    height: '255px',
+    width: '84%',
+    minWidth: '328px',
     cursor: 'pointer',
 };
 
@@ -15,14 +17,14 @@ export const cardHeadingStyles = {
     fontSize: 'lg',
     lineHeight: '150%',
     fontWeight: 'normal',
-    margin: '12px 0 18px 13px',
+    margin: '12px 0 12px 13px',
     height: '27px',
 };
 
 export const cardBodyStyles = {
-    padding: '0 13px 0 13px',
+    padding: '0 13px 14px 13px',
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     maxHeight: '48px',
-    overflow: 'hidden',
+    gap: '11px',
 };

@@ -39,4 +39,4 @@ export const h2TitleWithButtonStyles = {
 export const paragrapghStyles = {
     fontSize: 'sm',
     fontWeight: 'normal',
-}
+};

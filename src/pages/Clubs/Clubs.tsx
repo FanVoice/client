@@ -29,15 +29,37 @@ export const Clubs = () => {
                     sx={goBackButtonStyles}
                     icon={<GoBackButton />}
                     aria-label="Вернуться назад"
-                    onClick={() => {navigate(-1)}}
+                    onClick={() => {
+                        navigate(-1);
+                    }}
                 />{' '}
                 Клубы
             </Heading>
             <Box sx={categoriesContainerStyles}>
-                <CategoryCard src={rubin}  onClick={() => {navigate('#')}} />
-                <CategoryCard src={loko}  onClick={() => {navigate('#')}} />
-                <CategoryCard src={spartak}  onClick={() => {navigate('#')}} />
-                <CategoryCard src={ugmk} onClick={() => {navigate('#')}} />
+                <CategoryCard
+                    src={rubin}
+                    onClick={() => {
+                        navigate('/categories/clubs:slug');
+                    }}
+                />
+                <CategoryCard
+                    src={loko}
+                    onClick={() => {
+                        navigate('#');
+                    }}
+                />
+                <CategoryCard
+                    src={spartak}
+                    onClick={() => {
+                        navigate('#');
+                    }}
+                />
+                <CategoryCard
+                    src={ugmk}
+                    onClick={() => {
+                        navigate('#');
+                    }}
+                />
             </Box>
         </VStack>
     );

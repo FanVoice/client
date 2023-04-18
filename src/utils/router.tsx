@@ -8,6 +8,7 @@ import { ConferenceForm } from '../pages/forms/ConferenceForm';
 import { OfflineEventForm } from '../pages/forms/OfflineEventForm';
 import { Sports } from '../pages/Sports/Sports';
 import { Clubs } from '../pages/Clubs/Clubs';
+import Club from '../pages/Club/Club';
 
 export const router = createHashRouter([
     {
@@ -35,7 +36,7 @@ export const router = createHashRouter([
             },
             {
                 path: '/categories/clubs:slug',
-                element: <h1>Страница спортивного клуба</h1>,
+                element: <Club />,
             },
             {
                 path: '/categories/athletes',

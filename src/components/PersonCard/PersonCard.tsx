@@ -9,12 +9,19 @@ import {
 type PersonCardProps = {
     title: string;
     src: string;
-    club: string;
+    club: string | null;
     type: string;
+    sportType: string;
 };
 import { useNavigate } from 'react-router-dom';
 
-export const PersonCard = ({ title, src, club, type }: PersonCardProps) => {
+export const PersonCard = ({
+    title,
+    src,
+    club,
+    type,
+    sportType,
+}: PersonCardProps) => {
     const navigate = useNavigate();
 
     const handleClick = () => {
@@ -25,6 +32,7 @@ export const PersonCard = ({ title, src, club, type }: PersonCardProps) => {
             navigate('/categories/bloggers:slug');
         }
     };
+
     return (
         <Card sx={cardStyles} onClick={handleClick}>
             <Image src={src} alt={title} sx={cardImageStyles} />
@@ -32,8 +40,8 @@ export const PersonCard = ({ title, src, club, type }: PersonCardProps) => {
                 {title}
             </CardHeader>
             <CardBody sx={cardBodyStyles}>
-                <Tag>{title}</Tag>
-                <Tag>{club}</Tag>
+                <Tag>{sportType}</Tag>
+                {type === 'authlet' ? <Tag>{club}</Tag> : null}
             </CardBody>
         </Card>
     );

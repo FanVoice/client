@@ -4,13 +4,12 @@ import { Error } from '../pages/Error';
 import { Main } from '../pages/Main/Main';
 import { RootForm } from '../pages/forms/RootForm';
 import { VideoChatForm } from '../pages/forms/VideoChatForm';
-import { Authlets } from '../pages/Authlets';
+import { People } from '../pages/People';
 import { ConferenceForm } from '../pages/forms/ConferenceForm';
 import { OfflineEventForm } from '../pages/forms/OfflineEventForm';
 import { Sports } from '../pages/Sports/Sports';
 import { Clubs } from '../pages/Clubs/Clubs';
-import { Bloggers } from '../pages/Bloggers';
-import Authlet from '../pages/Authlet/Authlet';
+import { Person } from '../pages/Person/Person';
 
 export const router = createHashRouter([
     {
@@ -34,11 +33,11 @@ export const router = createHashRouter([
             },
             {
                 path: '/categories/authlets',
-                element: <Authlets />,
+                element: <People type="authlet" />,
             },
             {
                 path: '/categories/authlets:slug',
-                element: <Authlet />,
+                element: <Person type="authlet" />,
             },
             {
                 path: '/categories/clubs',
@@ -50,11 +49,11 @@ export const router = createHashRouter([
             },
             {
                 path: '/categories/bloggers',
-                element: <Bloggers />,
+                element: <People type="blogger" />,
             },
             {
                 path: '/categories/bloggers:slug',
-                element: <h1>Страница блоггера</h1>,
+                element: <Person type="blogger" />,
             },
             {
                 path: '/forms',

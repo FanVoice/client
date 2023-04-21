@@ -67,6 +67,9 @@ export const VideoChatForm = () => {
     }, []);
 
     const onFormSubmit = (data: FormInputs) => {
+        // Отправляем данные о создании конференции в метрику
+        ym && ym(93300398, 'reachGoal', 'video-chat-created');
+
         // если организатор не указан - достаем его из объекта Telegram
         if (!data.organizer) {
             data.organizer = tgContext.tg.initDataUnsafe.user.username;

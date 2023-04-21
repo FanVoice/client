@@ -1,17 +1,17 @@
-import { createHashRouter } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 import { Root } from '../pages/Root';
 import { Error } from '../pages/Error';
 import { Main } from '../pages/Main/Main';
-import { RootForm } from '../pages/forms/RootForm';
-import { VideoChatForm } from '../pages/forms/VideoChatForm';
-import { People } from '../pages/People';
-import { ConferenceForm } from '../pages/forms/ConferenceForm';
-import { OfflineEventForm } from '../pages/forms/OfflineEventForm';
 import { Sports } from '../pages/Sports/Sports';
 import { Clubs } from '../pages/Clubs/Clubs';
+import { RootForm } from '../pages/Forms/RootForm';
+import { VideoChatForm } from '../pages/Forms/VideoChatForm';
+import { OfflineEventForm } from '../pages/Forms/OfflineEventForm';
+import { ConferenceForm } from '../pages/Forms/ConferenceForm';
 import { Person } from '../pages/Person/Person';
+import { People } from '../pages/People';
 
-export const router = createHashRouter([
+export const router = createBrowserRouter([
     {
         path: '/',
         element: <Root />,

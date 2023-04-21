@@ -28,15 +28,27 @@ import {
     iconButtonStyles,
 } from './styles';
 import { useNavigate } from 'react-router-dom';
+import { h2TitleStyles } from '../../utils/styles';
+
+type categoriesType = {
+    categoryLogo: string;
+    id: number;
+    url: string;
+    title: string;
+};
+const categoriesData: categoriesType[] = [
+    { categoryLogo: sport, id: 1, url: 'sports', title: 'Виды спорта' },
+    { categoryLogo: people, id: 2, url: 'clubs', title: 'Клубы' },
+    { categoryLogo: youtube, id: 3, url: 'bloggers', title: 'Блогеры' },
+    { categoryLogo: handball, id: 4, url: 'authlets', title: 'Спортсмены' },
+];
 
 export const Main = () => {
     const navigate = useNavigate();
 
     return (
         <VStack>
-            <Heading fontSize="xl" mt="13px">
-                Маркетплейс
-            </Heading>
+            <Heading sx={h2TitleStyles}>Маркетплейс</Heading>
             <Tabs sx={tabsStyles}>
                 <TabList sx={tabListStyles}>
                     <Tab sx={tabStyles}>Все товары</Tab>
@@ -56,17 +68,32 @@ export const Main = () => {
                                 icon={<FilterIcon />}
                             />
                         </Box>
-                        <List pt="20px" display='flex' flexDir='column' gap='20px'>
+                        <List
+                            pt="20px"
+                            display="flex"
+                            flexDir="column"
+                            gap="20px"
+                        >
                             <ProductCard src={testImg} title="test" />
                             <ProductCard src={testImg} title="sport" />
-                            <ProductCard src={testImg} title="Название товара" />
+                            <ProductCard
+                                src={testImg}
+                                title="Название товара"
+                            />
                         </List>
                     </TabPanel>
                     <TabPanel sx={tabPanelCategories}>
-                        <CategoryCard src={sport} title="Виды спорта" onClick={() => {navigate('/categories/sports')}}/>
-                        <CategoryCard src={people} title="Клубы" onClick={() => {navigate('/categories/clubs')}} />
-                        <CategoryCard src={handball} title="Спортсмены" onClick={() => {navigate('/categories/athletes')}} />
-                        <CategoryCard src={youtube} title="Блогеры" onClick={() => {navigate('/categories/bloggers')}} />
+                        {categoriesData.map((card) => {
+                            return (
+                                <CategoryCard
+                                    src={card.categoryLogo}
+                                    title={card.title}
+                                    onClick={() => {
+                                        navigate(`/categories/${card.url}`);
+                                    }}
+                                />
+                            );
+                        })}
                     </TabPanel>
                 </TabPanels>
             </Tabs>

@@ -8,6 +8,8 @@ import { RootForm } from '../pages/Forms/RootForm';
 import { VideoChatForm } from '../pages/Forms/VideoChatForm';
 import { OfflineEventForm } from '../pages/Forms/OfflineEventForm';
 import { ConferenceForm } from '../pages/Forms/ConferenceForm';
+import { Person } from '../pages/Person/Person';
+import { People } from '../pages/People';
 
 export const router = createBrowserRouter([
     {
@@ -30,6 +32,14 @@ export const router = createBrowserRouter([
                 element: <h1>Страница определенного спорта</h1>,
             },
             {
+                path: '/categories/authlets',
+                element: <People type="authlet" />,
+            },
+            {
+                path: '/categories/authlets:slug',
+                element: <Person type="authlet" />,
+            },
+            {
                 path: '/categories/clubs',
                 element: <Clubs />,
             },
@@ -38,20 +48,12 @@ export const router = createBrowserRouter([
                 element: <h1>Страница спортивного клуба</h1>,
             },
             {
-                path: '/categories/athletes',
-                element: <h1>Спортсмены</h1>,
-            },
-            {
-                path: '/categories/athletes:slug',
-                element: <h1>Страница спортсмена</h1>,
-            },
-            {
                 path: '/categories/bloggers',
-                element: <h1>Блоггеры</h1>,
+                element: <People type="blogger" />,
             },
             {
                 path: '/categories/bloggers:slug',
-                element: <h1>Страница блоггера</h1>,
+                element: <Person type="blogger" />,
             },
             {
                 path: '/forms',

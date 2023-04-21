@@ -1,16 +1,18 @@
-import { createHashRouter } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 import { Root } from '../pages/Root';
 import { Error } from '../pages/Error';
 import { Main } from '../pages/Main/Main';
-import { RootForm } from '../pages/forms/RootForm';
-import { VideoChatForm } from '../pages/forms/VideoChatForm';
-import { ConferenceForm } from '../pages/forms/ConferenceForm';
-import { OfflineEventForm } from '../pages/forms/OfflineEventForm';
 import { Sports } from '../pages/Sports/Sports';
 import { Clubs } from '../pages/Clubs/Clubs';
+import { RootForm } from '../pages/Forms/RootForm';
+import { VideoChatForm } from '../pages/Forms/VideoChatForm';
+import { OfflineEventForm } from '../pages/Forms/OfflineEventForm';
+import { ConferenceForm } from '../pages/Forms/ConferenceForm';
+import { Person } from '../pages/Person/Person';
+import { People } from '../pages/People';
 import Club from '../pages/Club/Club';
 
-export const router = createHashRouter([
+export const router = createBrowserRouter([
     {
         path: '/',
         element: <Root />,
@@ -31,6 +33,14 @@ export const router = createHashRouter([
                 element: <h1>Страница определенного спорта</h1>,
             },
             {
+                path: '/categories/authlets',
+                element: <People type="authlet" />,
+            },
+            {
+                path: '/categories/authlets:slug',
+                element: <Person type="authlet" />,
+            },
+            {
                 path: '/categories/clubs',
                 element: <Clubs />,
             },
@@ -39,20 +49,12 @@ export const router = createHashRouter([
                 element: <Club />,
             },
             {
-                path: '/categories/athletes',
-                element: <h1>Спортсмены</h1>,
-            },
-            {
-                path: '/categories/athletes:slug',
-                element: <h1>Страница спортсмена</h1>,
-            },
-            {
                 path: '/categories/bloggers',
-                element: <h1>Блоггеры</h1>,
+                element: <People type="blogger" />,
             },
             {
                 path: '/categories/bloggers:slug',
-                element: <h1>Страница блоггера</h1>,
+                element: <Person type="blogger" />,
             },
             {
                 path: '/forms',

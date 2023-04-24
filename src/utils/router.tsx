@@ -22,8 +22,10 @@ export const router = createBrowserRouter([
                 path: '',
                 element: <Main />,
             },
-            // Роуты все товары и категории убрала, так как реализовала
-            //все на одной странице ('/') через Tabs
+            {
+                path: 'categories',
+                element: <Main />,
+            },
             {
                 path: '/categories/sports',
                 element: <Sports />,
@@ -45,7 +47,7 @@ export const router = createBrowserRouter([
                 element: <Clubs />,
             },
             {
-                path: '/categories/clubs:slug',
+                path: '/categories/clubs:1',
                 element: <Club />,
             },
             {

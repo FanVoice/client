@@ -5,9 +5,6 @@ import {
     HStack,
     Text,
     List,
-    Box,
-    IconButton,
-    Input,
     Tab,
     TabList,
     TabPanel,
@@ -15,36 +12,62 @@ import {
     Tabs,
 } from '@chakra-ui/react';
 import { GoBackButton } from '../../components/GoBackButton';
-// import { h2TitleWithButtonStyles, paragrapghStyles } from '../../utils/styles';
 import { Logo } from '../../components/Logo';
 import club from '../../assets/clubs/RubinLogo2019.svg';
 import testImg from '../../assets/test-product.png';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
 import { cardImageStyles, h4HeadingStyles, logoStyles } from './styles';
-import { CategoryCard } from '../../components/CategoryCard/CategoryCard';
-import { FilterIcon } from '../../components/FilterIcon';
+import person from '../../assets/authlets.png';
 import {
     tabsStyles,
     tabListStyles,
     tabStyles,
     tabPanelAllCards,
-    iconButtonStyles,
     tabPanelCategories,
 } from '../Main/styles';
+import { PersonCard } from '../../components/PersonCard/PersonCard';
+import { h2TitleWithButtonStyles, paragrapghStyles } from '../../utils/styles';
+import { HeaderWithLogo } from '../../components/HeaderWithLogo/HeaderWithLogo';
+
+type personDataType = {
+    name: string;
+    club: string;
+    photo: string;
+    sportType: string;
+};
+
+const personData: personDataType[] = [
+    {
+        name: 'Кто-то',
+        club: 'Спартак',
+        photo: person,
+        sportType: 'Футбол',
+    },
+    {
+        name: 'Кто-то',
+        club: 'Спартак',
+        photo: person,
+        sportType: 'Футбол',
+    },
+    {
+        name: 'Кто-то',
+        club: 'Спартак',
+        photo: person,
+        sportType: 'Футбол',
+    },
+];
 
 const Club = ({}) => {
     return (
         <VStack display="flex" justifyContent="center">
-            <Heading
-                // sx={h2TitleWithButtonStyles}
-                display="flex"
-                justifyContent="flex-end"
-            >
-                <GoBackButton />
-                {/* <Logo sx={logoStyles} /> */}
-            </Heading>
-            <HStack>
-                <Image src={club} alt="Название клуба" sx={cardImageStyles} />
+            <HeaderWithLogo />
+            <HStack w="100%">
+                <Image
+                    src={club}
+                    alt="Название клуба"
+                    sx={cardImageStyles}
+                    pr="20px"
+                />
                 <VStack
                     width="100%"
                     display="flex"
@@ -83,30 +106,17 @@ const Club = ({}) => {
                             flexDir="column"
                             gap="20px"
                         >
-                            <PersonCard
-                                src={person}
-                                title="Кто-то"
-                                club="Спартак"
-                                type="authlet"
-                            />
-                            <PersonCard
-                                src={person}
-                                title="Кто-то"
-                                club="Спартак"
-                                type="authlet"
-                            />
-                            <PersonCard
-                                src={person}
-                                title="Кто-то"
-                                club="Спартак"
-                                type="authlet"
-                            />
-                            <PersonCard
-                                src={person}
-                                title="Кто-то"
-                                club="Спартак"
-                                type="authlet"
-                            />
+                            {personData.map((card) => {
+                                return (
+                                    <PersonCard
+                                        src={card.photo}
+                                        title={card.name}
+                                        club={card.club}
+                                        sportType={card.sportType}
+                                        type="authlet"
+                                    />
+                                );
+                            })}
                         </List>
                     </TabPanel>
                     <TabPanel sx={tabPanelCategories}>

@@ -10,6 +10,7 @@ import {
     IconButton,
     List,
     Box,
+    useDisclosure,
 } from '@chakra-ui/react';
 import { FilterIcon } from '../../components/FilterIcon';
 import { CategoryCard } from '../../components/CategoryCard/CategoryCard';
@@ -27,8 +28,10 @@ import {
     tabPanelCategories,
     iconButtonStyles,
 } from './styles';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { h2TitleStyles } from '../../utils/styles';
+import { useEffect, useState } from 'react';
+import { FilterPopup } from '../../components/FilterPopup/FilterPopup';
 
 type categoriesType = {
     categoryLogo: string;
@@ -45,11 +48,42 @@ const categoriesData: categoriesType[] = [
 
 export const Main = () => {
     const navigate = useNavigate();
+    const locaion = useLocation();
+    const [tabIndex, setTabIndex] = useState<number>(0);
+    const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
+    useEffect(() => {
+        if (locaion.pathname === '/') {
+            console.log(0);
+            setTabIndex(0);
+            return;
+        }
+        if (locaion.pathname === '/categories') {
+            console.log(1);
+            setTabIndex(1);
+            return;
+        }
+    }, [locaion]);
+
+    const onTabChange = () => {
+        if (tabIndex === 0) {
+            navigate('/categories');
+        }
+        if (tabIndex === 1) {
+            navigate('/');
+        }
+    };
+
+    const onFilterOpen = () => {
+        setIsFilterOpen(true);
+        onOpen();
+    };
 
     return (
         <VStack>
             <Heading sx={h2TitleStyles}>Маркетплейс</Heading>
-            <Tabs sx={tabsStyles}>
+            <Tabs sx={tabsStyles} onChange={onTabChange}>
                 <TabList sx={tabListStyles}>
                     <Tab sx={tabStyles}>Все товары</Tab>
                     <Tab sx={tabStyles}>Категории</Tab>
@@ -66,6 +100,8 @@ export const Main = () => {
                                 sx={iconButtonStyles}
                                 aria-label="Фильтр"
                                 icon={<FilterIcon />}
+                                _hover={{ background: 'transparent' }}
+                                onClick={onFilterOpen}
                             />
                         </Box>
                         <List
@@ -97,6 +133,9 @@ export const Main = () => {
                     </TabPanel>
                 </TabPanels>
             </Tabs>
+            {isFilterOpen ? (
+                <FilterPopup isOpen={isOpen} onClose={onClose} />
+            ) : null}
         </VStack>
     );
 };

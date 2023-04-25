@@ -5,3 +5,18 @@ export const modalStyles = {
     minW: '390px',
     maxW: '390px',
 };
+
+export const selectStyles = {
+    _focusVisible: {
+        borderColor: 'orange.500',
+    },
+}
+
+export const checkboxStyles = {
+    w: '131px'
+}
+
+export const checkBoxContainerStyles={
+    display:"flex",
+    justifyContent:'space-between'
+}

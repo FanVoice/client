@@ -57,7 +57,7 @@ const personData: personDataType[] = [
     },
 ];
 
-const Club = ({}) => {
+export const Club = ({}) => {
     return (
         <VStack display="flex" justifyContent="center">
             <HeaderWithLogo />
@@ -139,5 +139,3 @@ const Club = ({}) => {
         </VStack>
     );
 };
-
-export default Club;

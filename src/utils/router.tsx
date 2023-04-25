@@ -10,7 +10,7 @@ import { OfflineEventForm } from '../pages/Forms/OfflineEventForm';
 import { ConferenceForm } from '../pages/Forms/ConferenceForm';
 import { Person } from '../pages/Person/Person';
 import { People } from '../pages/People';
-import Club from '../pages/Club/Club';
+import { Club } from '../pages/Club/Club';
 
 export const router = createBrowserRouter([
     {

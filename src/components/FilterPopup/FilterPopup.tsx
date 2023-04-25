@@ -13,10 +13,8 @@ import {
     HStack,
     Checkbox,
 } from '@chakra-ui/react';
-import { modalStyles } from './styles';
+import { checkBoxContainerStyles, checkboxStyles, modalStyles, selectStyles } from './styles';
 import { h2TitleStyles, h3TitleStyles } from '../../utils/styles';
-import { formTextStyles } from '../../pages/Forms/styles';
-import { errorMessages } from '../../utils/constants';
 
 export const FilterPopup = ({
     isOpen,
@@ -42,7 +40,7 @@ export const FilterPopup = ({
                     <FormLabel sx={h3TitleStyles} pb="16px !important">
                         Сортировка
                     </FormLabel>
-                    <Select
+                    <Select sx={selectStyles}
                         defaultValue={options[0].value}
                         mb="26px !important"
                     >
@@ -55,16 +53,16 @@ export const FilterPopup = ({
                     <FormLabel sx={h3TitleStyles} pb="26px !important">
                         Фильтрация
                     </FormLabel>
-                    <HStack pb="26px !important">
-                        <Checkbox colorScheme="orange">Впечатления</Checkbox>
-                        <Checkbox colorScheme="orange">Мерч</Checkbox>
+                    <HStack sx={checkBoxContainerStyles} pb="26px !important">
+                        <Checkbox sx={checkboxStyles} colorScheme="orange">Впечатления</Checkbox>
+                        <Checkbox sx={checkboxStyles} colorScheme="orange">Мерч</Checkbox>
                     </HStack>
                     <FormLabel sx={h3TitleStyles} pb="26px !important">
                         Тип мероприятия
                     </FormLabel>
-                    <HStack pb="26px !important">
-                        <Checkbox colorScheme="orange">Онлайн</Checkbox>
-                        <Checkbox colorScheme="orange">Офлайн</Checkbox>
+                    <HStack sx={checkBoxContainerStyles} pb="26px !important">
+                        <Checkbox sx={checkboxStyles} colorScheme="orange">Онлайн</Checkbox>
+                        <Checkbox sx={checkboxStyles} colorScheme="orange">Офлайн</Checkbox>
                     </HStack>
                 </ModalBody>
 

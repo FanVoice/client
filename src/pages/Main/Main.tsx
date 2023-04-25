@@ -64,7 +64,7 @@ export const Main = () => {
             setTabIndex(1);
             return;
         }
-    }, [locaion]);
+    }, [locaion.pathname]);
 
     const onTabChange = () => {
         if (tabIndex === 0) {
@@ -83,10 +83,14 @@ export const Main = () => {
     return (
         <VStack>
             <Heading sx={h2TitleStyles}>Маркетплейс</Heading>
-            <Tabs sx={tabsStyles} onChange={onTabChange}>
+            <Tabs sx={tabsStyles} index={tabIndex} onChange={onTabChange}>
                 <TabList sx={tabListStyles}>
-                    <Tab sx={tabStyles}>Все товары</Tab>
-                    <Tab sx={tabStyles}>Категории</Tab>
+                    <Tab sx={tabStyles} isSelected={tabIndex === 0}>
+                        Все товары
+                    </Tab>
+                    <Tab sx={tabStyles} isSelected={tabIndex === 1}>
+                        Категории
+                    </Tab>
                 </TabList>
                 <TabPanels>
                     <TabPanel sx={tabPanelAllCards}>

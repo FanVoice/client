@@ -5,7 +5,7 @@ export type peopleProps = {
 export type personDataType = {
     id: number;
     name: string;
-    type: string;
+    type: 'authlet' | 'blogger';
     birthday: string | null;
     bio: string;
     club_id: number;

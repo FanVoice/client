@@ -1,5 +1,4 @@
 import { PersonCard } from '../components/PersonCard/PersonCard';
-import person from '../assets/authlets.png';
 import { h2TitleWithButtonStyles } from '../utils/styles';
 import { Heading, VStack } from '@chakra-ui/react';
 import { GoBackButton } from '../components/GoBackButton';

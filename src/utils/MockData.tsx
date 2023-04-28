@@ -1,9 +1,9 @@
 import testPhoto from '../assets/authlets.png';
 import testClubLogo from '../assets/clubs/RubinLogo2019.svg';
 import testProduct from '../assets/test-product.png';
-import { clubDataType } from './types';
+import { clubDataType, personDataType } from './types';
 
-export const personDataArray = [
+export const personDataArray: personDataType[] = [
     {
         id: 1,
         name: 'Спортсмен',
@@ -30,7 +30,7 @@ export const personDataArray = [
     },
 ];
 
-export const personDataSingle = {
+export const personDataSingle: personDataType = {
     id: 1,
     name: 'Спортсмен2',
     type: 'authlet',

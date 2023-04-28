@@ -6,42 +6,32 @@ import {
     cardStyles,
 } from './styles';
 
-type PersonCardProps = {
-    title: string;
-    src: string;
-    club: string | null;
-    type: string;
-    sportType: string;
-};
 import { useNavigate } from 'react-router-dom';
+import { personDataType } from '../../utils/types';
 
 export const PersonCard = ({
-    title,
-    src,
-    club,
-    type,
-    sportType,
-}: PersonCardProps) => {
+    data
+}: {data: personDataType}) => {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        if (type === 'authlet') {
+        if (data.type === 'authlet') {
             navigate('/categories/authlets:slug');
         }
-        if (type === 'blogger') {
+        if (data.type === 'blogger') {
             navigate('/categories/bloggers:slug');
         }
     };
 
     return (
         <Card sx={cardStyles} onClick={handleClick}>
-            <Image src={src} alt={title} sx={cardImageStyles} />
+            <Image src={data.photo} alt={data.name} sx={cardImageStyles} />
             <CardHeader p="0" sx={cardHeadingStyles}>
-                {title}
+                {data.name}
             </CardHeader>
             <CardBody sx={cardBodyStyles}>
-                <Tag>{sportType}</Tag>
-                {type === 'authlet' ? <Tag>{club}</Tag> : null}
+                <Tag>{data.sport_type_name}</Tag>
+                {data.type === 'authlet' ? <Tag>{data.club_name}</Tag> : null}
             </CardBody>
         </Card>
     );

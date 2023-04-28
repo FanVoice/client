@@ -10,6 +10,7 @@ import rubin from '../../assets/clubs/RubinLogo2019.svg';
 import loko from '../../assets/clubs/FC_Lokomotiv 1.svg';
 import spartak from '../../assets/clubs/FC_Spartak_Moscow_Logo 1.svg';
 import ugmk from '../../assets/clubs/Ugmklogo 1.svg';
+import { clubDataArray } from '../../utils/MockData';
 
 type clubDataType = {
     clubLogo: string;
@@ -31,10 +32,10 @@ export const Clubs = () => {
                 Клубы
             </Heading>
             <Box sx={categoriesContainerStyles}>
-                {clubData.map((card) => {
+                {clubDataArray.map((card) => {
                     return (
                         <CategoryCard
-                            src={card.clubLogo}
+                            src={card.logo}
                             onClick={() => {
                                 navigate(`/categories/clubs:${card.id}`);
                             }}

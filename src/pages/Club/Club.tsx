@@ -11,13 +11,8 @@ import {
     TabPanels,
     Tabs,
 } from '@chakra-ui/react';
-import { GoBackButton } from '../../components/GoBackButton';
-import { Logo } from '../../components/Logo';
-import club from '../../assets/clubs/RubinLogo2019.svg';
-import testImg from '../../assets/test-product.png';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
 import { cardImageStyles, h4HeadingStyles, logoStyles } from './styles';
-import person from '../../assets/authlets.png';
 import {
     tabsStyles,
     tabListStyles,
@@ -26,36 +21,10 @@ import {
     tabPanelCategories,
 } from '../Main/styles';
 import { PersonCard } from '../../components/PersonCard/PersonCard';
-import { h2TitleWithButtonStyles, paragrapghStyles } from '../../utils/styles';
+import { paragrapghStyles } from '../../utils/styles';
 import { HeaderWithLogo } from '../../components/HeaderWithLogo/HeaderWithLogo';
-
-type personDataType = {
-    name: string;
-    club: string;
-    photo: string;
-    sportType: string;
-};
-
-const personData: personDataType[] = [
-    {
-        name: 'Кто-то',
-        club: 'Спартак',
-        photo: person,
-        sportType: 'Футбол',
-    },
-    {
-        name: 'Кто-то',
-        club: 'Спартак',
-        photo: person,
-        sportType: 'Футбол',
-    },
-    {
-        name: 'Кто-то',
-        club: 'Спартак',
-        photo: person,
-        sportType: 'Футбол',
-    },
-];
+import { CardList } from '../../components/CardList';
+import { clubData, personDataArray, productDataArray } from '../../utils/MockData';
 
 export const Club = ({}) => {
     return (
@@ -63,8 +32,8 @@ export const Club = ({}) => {
             <HeaderWithLogo />
             <HStack w="100%">
                 <Image
-                    src={club}
-                    alt="Название клуба"
+                    src={clubData.logo}
+                    alt={clubData.club_name}
                     sx={cardImageStyles}
                     pr="20px"
                 />
@@ -74,11 +43,13 @@ export const Club = ({}) => {
                     justifyContent="space-between"
                 >
                     <Heading as="h4" sx={h4HeadingStyles}>
-                        Название клуба
+                        {clubData.club_name}
                     </Heading>
                     <HStack>
                         <Text sx={paragrapghStyles}>Основан: </Text>
-                        <Text sx={paragrapghStyles}>01.01.1990 </Text>
+                        <Text sx={paragrapghStyles}>
+                            {clubData.founding_date}
+                        </Text>
                     </HStack>
                 </VStack>
             </HStack>
@@ -86,13 +57,7 @@ export const Club = ({}) => {
             <Heading as="h4" sx={h4HeadingStyles} width="100%" mt="13px">
                 О клубе
             </Heading>
-            <Text sx={paragrapghStyles}>
-                Ad exercitation enim labore aliqua laborum tempor dolore
-                exercitation aliqua Lorem sint quis est ut irure. Nisi elit non
-                sit veniam fugiat cupidatat esse in. Ad minim sit in aliquip
-                ipsum incididunt dolore laborum. Ut ea sit id exercitation
-                ullamco duis elit amet non enim dolor nostrud.
-            </Text>
+            <Text sx={paragrapghStyles}>{clubData.description}</Text>
             <Tabs sx={tabsStyles}>
                 <TabList sx={tabListStyles}>
                     <Tab sx={tabStyles}>Спортсмены</Tab>
@@ -100,39 +65,10 @@ export const Club = ({}) => {
                 </TabList>
                 <TabPanels>
                     <TabPanel sx={tabPanelAllCards}>
-                        <List
-                            pt="20px"
-                            display="flex"
-                            flexDir="column"
-                            gap="20px"
-                        >
-                            {personData.map((card) => {
-                                return (
-                                    <PersonCard
-                                        src={card.photo}
-                                        title={card.name}
-                                        club={card.club}
-                                        sportType={card.sportType}
-                                        type="authlet"
-                                    />
-                                );
-                            })}
-                        </List>
+                        <CardList data={personDataArray} component={PersonCard} />
                     </TabPanel>
                     <TabPanel sx={tabPanelCategories}>
-                        <List
-                            pt="20px"
-                            display="flex"
-                            flexDir="column"
-                            gap="20px"
-                        >
-                            <ProductCard src={testImg} title="test" />
-                            <ProductCard src={testImg} title="sport" />
-                            <ProductCard
-                                src={testImg}
-                                title="Название товара"
-                            />
-                        </List>
+                        <CardList data={productDataArray} component={ProductCard} />
                     </TabPanel>
                 </TabPanels>
             </Tabs>

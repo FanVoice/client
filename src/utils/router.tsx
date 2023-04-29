@@ -10,6 +10,7 @@ import { OfflineEventForm } from '../pages/Forms/OfflineEventForm';
 import { ConferenceForm } from '../pages/Forms/ConferenceForm';
 import { Person } from '../pages/Person/Person';
 import { People } from '../pages/People';
+import { Club } from '../pages/Club/Club';
 
 export const router = createBrowserRouter([
     {
@@ -21,8 +22,10 @@ export const router = createBrowserRouter([
                 path: '',
                 element: <Main />,
             },
-            // Роуты все товары и категории убрала, так как реализовала
-            //все на одной странице ('/') через Tabs
+            {
+                path: 'categories',
+                element: <Main />,
+            },
             {
                 path: '/categories/sports',
                 element: <Sports />,
@@ -44,8 +47,8 @@ export const router = createBrowserRouter([
                 element: <Clubs />,
             },
             {
-                path: '/categories/clubs:slug',
-                element: <h1>Страница спортивного клуба</h1>,
+                path: '/categories/clubs:1',
+                element: <Club />,
             },
             {
                 path: '/categories/bloggers',

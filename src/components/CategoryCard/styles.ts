@@ -19,8 +19,4 @@ export const cardBodyStyles = {
     justifyContent: 'center',
 };
 
-export const cardHeadingStyles = {
-    p: '0',
-    fontSize: 'md',
-    fontWeight: 'bold',
-};
+

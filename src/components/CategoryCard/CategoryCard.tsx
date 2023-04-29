@@ -1,5 +1,6 @@
 import { Card, CardBody, CardHeader, Heading, Image } from '@chakra-ui/react';
-import { cardStyles, cardBodyStyles, cardImageStyles, cardHeadingStyles } from './styles';
+import { cardStyles, cardBodyStyles, cardImageStyles } from './styles';
+import { h3TitleStyles } from '../../utils/styles';
 
 export type CategoryCardProps = {
     src: string;
@@ -13,7 +14,7 @@ export const CategoryCard = ({ src, title, onClick }: CategoryCardProps) => {
                 <Image src={src} alt={title} sx={cardImageStyles} />
             </CardBody>
             <CardHeader p='0' >
-                <Heading sx={cardHeadingStyles}>{title}</Heading>
+                <Heading as='h3' sx={h3TitleStyles}>{title}</Heading>
             </CardHeader>
         </Card>
     );

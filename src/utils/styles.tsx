@@ -26,6 +26,14 @@ export const categoriesContainerStyles = {
 export const h2TitleStyles = {
     fontSize: 'xl',
     mt: '13px',
+    fontWeight: 'bold',
+    lineHeight: '24px',
+};
+
+export const h3TitleStyles = {
+    p: '0',
+    fontSize: 'md',
+    fontWeight: 'bold',
 };
 
 export const h2TitleWithButtonStyles = {

@@ -6,15 +6,37 @@ import {
     ModalCloseButton,
     ModalBody,
     ModalFooter,
-    Button,
     FormLabel,
-    Input,
     Select,
     HStack,
     Checkbox,
 } from '@chakra-ui/react';
-import { checkBoxContainerStyles, checkboxStyles, modalStyles, selectStyles } from './styles';
+import {
+    checkBoxContainerStyles,
+    checkboxStyles,
+    elementSpacingStyles,
+    modalStyles,
+    selectStyles,
+} from './styles';
 import { h2TitleStyles, h3TitleStyles } from '../../utils/styles';
+import { BaseButton } from '../BaseButton';
+
+const texts = {
+    header: 'Умный поиск',
+    sorting: 'Сортировка',
+    filter: 'Фильтрация',
+    events: 'Впечатления',
+    merch: 'Мерч',
+    eventType: 'Тип мероприятия',
+    online: 'Онлайн',
+    offline: 'Офлайн',
+};
+
+const options = [
+    { value: 'popular', label: 'По популярности' },
+    { value: 'option2', label: 'Option 2' },
+    { value: 'option3', label: 'Option 3' },
+];
 
 export const FilterPopup = ({
     isOpen,
@@ -23,24 +45,20 @@ export const FilterPopup = ({
     isOpen: boolean;
     onClose: () => void;
 }) => {
-    const options = [
-        { value: 'popular', label: 'По популярности' },
-        { value: 'option2', label: 'Option 2' },
-        { value: 'option3', label: 'Option 3' },
-    ];
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent sx={modalStyles} textAlign="center">
                 <ModalHeader as="h2" sx={h2TitleStyles}>
-                    Умный поиск
+                    {texts.header}
                 </ModalHeader>
                 <ModalCloseButton top="36px" right="46px" h="12px" w="12px" />
                 <ModalBody p="31px">
-                    <FormLabel sx={h3TitleStyles} pb="16px !important">
-                        Сортировка
+                    <FormLabel sx={h3TitleStyles} pb="16px">
+                        {texts.sorting}
                     </FormLabel>
-                    <Select sx={selectStyles}
+                    <Select
+                        sx={selectStyles}
                         defaultValue={options[0].value}
                         mb="26px !important"
                     >
@@ -50,31 +68,41 @@ export const FilterPopup = ({
                             </option>
                         ))}
                     </Select>
-                    <FormLabel sx={h3TitleStyles} pb="26px !important">
-                        Фильтрация
+                    <FormLabel
+                        sx={{ ...h3TitleStyles, ...elementSpacingStyles }}
+                    >
+                        {texts.filter}
                     </FormLabel>
-                    <HStack sx={checkBoxContainerStyles} pb="26px !important">
-                        <Checkbox sx={checkboxStyles} colorScheme="orange">Впечатления</Checkbox>
-                        <Checkbox sx={checkboxStyles} colorScheme="orange">Мерч</Checkbox>
+                    <HStack
+                        sx={{
+                            ...checkBoxContainerStyles,
+                            ...elementSpacingStyles,
+                        }}
+                    >
+                        <Checkbox sx={checkboxStyles} colorScheme="orange">
+                            {texts.events}
+                        </Checkbox>
+                        <Checkbox sx={checkboxStyles} colorScheme="orange">
+                            {texts.merch}
+                        </Checkbox>
                     </HStack>
-                    <FormLabel sx={h3TitleStyles} pb="26px !important">
-                        Тип мероприятия
+                    <FormLabel sx={{...h3TitleStyles, ...elementSpacingStyles}}>
+                        {texts.eventType}
                     </FormLabel>
-                    <HStack sx={checkBoxContainerStyles} pb="26px !important">
-                        <Checkbox sx={checkboxStyles} colorScheme="orange">Онлайн</Checkbox>
-                        <Checkbox sx={checkboxStyles} colorScheme="orange">Офлайн</Checkbox>
+                    <HStack
+                        sx={{...checkBoxContainerStyles, ...elementSpacingStyles}}
+                    >
+                        <Checkbox sx={checkboxStyles} colorScheme="orange">
+                            {texts.online}
+                        </Checkbox>
+                        <Checkbox sx={checkboxStyles} colorScheme="orange">
+                            {texts.offline}
+                        </Checkbox>
                     </HStack>
                 </ModalBody>
 
                 <ModalFooter p="32px">
-                    <Button
-                        colorScheme="orange"
-                        w="328px"
-                        h="48px"
-                        onClick={onClose}
-                    >
-                        Применить
-                    </Button>
+                    <BaseButton buttonText="Применить" onClick={onClose} />
                 </ModalFooter>
             </ModalContent>
         </Modal>

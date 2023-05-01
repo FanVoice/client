@@ -32,6 +32,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { h2TitleStyles } from '../../utils/styles';
 import { useEffect, useState } from 'react';
 import { FilterPopup } from '../../components/FilterPopup/FilterPopup';
+import { CardList } from '../../components/CardList';
+import { productDataArray } from '../../utils/MockData';
 
 type categoriesType = {
     categoryLogo: string;
@@ -108,19 +110,10 @@ export const Main = () => {
                                 onClick={onFilterOpen}
                             />
                         </Box>
-                        <List
-                            pt="20px"
-                            display="flex"
-                            flexDir="column"
-                            gap="20px"
-                        >
-                            <ProductCard src={testImg} title="test" />
-                            <ProductCard src={testImg} title="sport" />
-                            <ProductCard
-                                src={testImg}
-                                title="Название товара"
-                            />
-                        </List>
+                        <CardList
+                            data={productDataArray}
+                            component={ProductCard}
+                        />
                     </TabPanel>
                     <TabPanel sx={tabPanelCategories}>
                         {categoriesData.map((card) => {
@@ -137,9 +130,7 @@ export const Main = () => {
                     </TabPanel>
                 </TabPanels>
             </Tabs>
-            {isFilterOpen ? (
-                <FilterPopup isOpen={isOpen} onClose={onClose} />
-            ) : null}
+            {isFilterOpen && <FilterPopup isOpen={isOpen} onClose={onClose} />}
         </VStack>
     );
 };

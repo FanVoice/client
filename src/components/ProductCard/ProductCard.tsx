@@ -1,4 +1,11 @@
-import { Card, CardBody, Image, CardHeader, Heading } from '@chakra-ui/react';
+import {
+    Card,
+    CardBody,
+    Image,
+    CardHeader,
+    Heading,
+    Tag,
+} from '@chakra-ui/react';
 import {
     cardStyles,
     cardImageStyles,
@@ -7,24 +14,20 @@ import {
 } from './styles';
 
 import './styles.css';
+import { productDataType } from '../../utils/types';
 
-export type ProductCardProps = {
-    src: string;
-    title: string;
-};
-
-export const ProductCard = ({ src, title }: ProductCardProps) => {
+export const ProductCard = ({ data }: { data: productDataType }) => {
     return (
         <Card sx={cardStyles}>
-            <Image src={src} alt={title} sx={cardImageStyles} />
-            <CardHeader p="0">
-                <Heading sx={cardHeadingStyles}>{title}</Heading>
+            <Image src={data.photo} alt={data.name} sx={cardImageStyles} />
+            <CardHeader p="0" display="flex" alignContent='center' justifyContent='space-between'>
+                <Heading sx={cardHeadingStyles}>{data.name}</Heading>
+                <Tag height='20px' margin='18px 16px 18px 0' variant="solid" colorScheme="orange">
+                    {`${data.price} $`}
+                </Tag>
             </CardHeader>
             <CardBody className="product-card__body" sx={cardBodyStyles}>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vel
-                quibusdam laudantium hic, consequuntur nobis libero asperiores
-                tempora iste inventore magni labore, alias aspernatur quia
-                dolore cum consequatur quidem. Praesentium, enim?
+                {data.description}
             </CardBody>
         </Card>
     );

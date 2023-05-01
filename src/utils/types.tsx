@@ -10,7 +10,7 @@ export type personDataType = {
     bio: string;
     club_id: number;
     club_name: string;
-    photo: string | undefined;
+    photo?: string;
     sport_type: number;
     sport_type_name: string;
 };

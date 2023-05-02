@@ -19,7 +19,6 @@ import people from '../../assets/people.svg';
 import youtube from '../../assets/youtube.svg';
 import handball from '../../assets/handball.svg';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
-import testImg from '../../assets/test-product.png';
 import {
     tabsStyles,
     tabListStyles,
@@ -34,6 +33,11 @@ import { useEffect, useState } from 'react';
 import { FilterPopup } from '../../components/FilterPopup/FilterPopup';
 import { CardList } from '../../components/CardList';
 import { productDataArray } from '../../utils/MockData';
+import { getCategories } from '../../store/CategoriesSlice';
+import { useDispatch } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { RootState } from '../../store/rootReducer';
+import { AnyAction } from '@reduxjs/toolkit';
 
 type categoriesType = {
     categoryLogo: string;
@@ -50,23 +54,23 @@ const categoriesData: categoriesType[] = [
 
 export const Main = () => {
     const navigate = useNavigate();
-    const locaion = useLocation();
+    const location = useLocation();
     const [tabIndex, setTabIndex] = useState<number>(0);
     const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const dispatch: ThunkDispatch<RootState, void, AnyAction> = useDispatch();
 
     useEffect(() => {
-        if (locaion.pathname === '/') {
-            console.log(0);
+        dispatch(getCategories());
+        if (location.pathname === '/') {
             setTabIndex(0);
             return;
         }
-        if (locaion.pathname === '/categories') {
-            console.log(1);
+        if (location.pathname === '/categories') {
             setTabIndex(1);
             return;
         }
-    }, [locaion.pathname]);
+    }, [location.pathname]);
 
     const onTabChange = () => {
         if (tabIndex === 0) {

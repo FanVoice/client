@@ -1,11 +1,11 @@
 export type peopleProps = {
-    type: 'authlet' | 'blogger';
+    type: 'athlete' | 'blogger';
 };
 
 export type personDataType = {
     id: number;
     name: string;
-    type: 'authlet' | 'blogger';
+    type: 'athlete' | 'blogger';
     birthday: string | null;
     bio: string;
     club_id: number;
@@ -36,5 +36,11 @@ export type productDataType = {
     person_id: number | null;
     club_id: number | null;
     tags: string | null;
+    photo: string;
+};
+
+export type CategoriesType = {
+    id: number;
+    name: string;
     photo: string;
 };

@@ -1,4 +1,4 @@
-import testPhoto from '../assets/authlets.png';
+import testPhoto from '../assets/athletes.png';
 import testClubLogo from '../assets/clubs/RubinLogo2019.svg';
 import testProduct from '../assets/test-product.png';
 import { clubDataType, personDataType } from './types';
@@ -7,7 +7,7 @@ export const personDataArray: personDataType[] = [
     {
         id: 1,
         name: 'Спортсмен',
-        type: 'authlet',
+        type: 'athlete',
         birthday: '15.02.1990',
         bio: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vel quibusdam laudantium hic, consequuntur nobis libero asperiores tempora iste inventore magni labore, alias aspernatur quia dolore cum consequatur quidem. Praesentium, enim?',
         club_id: 2,
@@ -19,7 +19,7 @@ export const personDataArray: personDataType[] = [
     {
         id: 2,
         name: 'Спортсмен2',
-        type: 'authlet',
+        type: 'athlete',
         birthday: '15.02.1990',
         bio: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vel quibusdam laudantium hic, consequuntur nobis libero asperiores tempora iste inventore magni labore, alias aspernatur quia dolore cum consequatur quidem. Praesentium, enim?',
         club_id: 2,
@@ -33,7 +33,7 @@ export const personDataArray: personDataType[] = [
 export const personDataSingle: personDataType = {
     id: 1,
     name: 'Спортсмен2',
-    type: 'authlet',
+    type: 'athlete',
     birthday: '15.02.1990',
     bio: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vel quibusdam laudantium hic, consequuntur nobis libero asperiores tempora iste inventore magni labore, alias aspernatur quia dolore cum consequatur quidem. Praesentium, enim?',
     club_id: 2,

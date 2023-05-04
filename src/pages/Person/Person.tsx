@@ -25,7 +25,7 @@ export const Person = ({ type }: peopleProps) => {
                 </Heading>
                 <Text sx={paragrapghStyles}>{personDataSingle.birthday}</Text>
             </HStack>
-            {type === 'authlet' ? (
+            {type === 'athlete' ? (
                 <HStack width="100%" display="flex" mt="13px !important">
                     <Heading as="h4" sx={h4HeadingStyles}>
                         Клуб:

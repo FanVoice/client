@@ -29,7 +29,7 @@ export const People = ({ type }: peopleProps) => {
         <VStack display="flex" justifyContent="center" gap="12px">
             <Heading sx={h2TitleWithButtonStyles}>
                 <GoBackButton />
-                {type === 'authlet' ? 'Спортсмены' : 'Блоггеры'}
+                {type === 'athlete' ? 'Спортсмены' : 'Блоггеры'}
             </Heading>
             <CardList data={personData} component={PersonCard} />
         </VStack>

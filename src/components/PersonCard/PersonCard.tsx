@@ -15,8 +15,8 @@ export const PersonCard = ({
     const navigate = useNavigate();
 
     const handleClick = () => {
-        if (data.type === 'authlet') {
-            navigate('/categories/authlets:slug');
+        if (data.type === 'athlete') {
+            navigate('/categories/athletes:slug');
         }
         if (data.type === 'blogger') {
             navigate('/categories/bloggers:slug');
@@ -31,7 +31,7 @@ export const PersonCard = ({
             </CardHeader>
             <CardBody sx={cardBodyStyles}>
                 <Tag>{data.sport_type_name}</Tag>
-                {data.type === 'authlet' ? <Tag>{data.club_name}</Tag> : null}
+                {data.type === 'athlete' ? <Tag>{data.club_name}</Tag> : null}
             </CardBody>
         </Card>
     );

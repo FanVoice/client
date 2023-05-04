@@ -33,7 +33,6 @@ type FormInputs = {
     datetime: Date;
     duration: number;
     durationForOne: number;
-    organizer: string;
 };
 
 const strings = {
@@ -42,15 +41,11 @@ const strings = {
     dateTime: 'Дата и время проведения',
     duration: 'Длительность видеочата (в минутах)',
     durationForOne: 'Длительность для одного участника (в минутах)',
-    checkbox: 'Мероприятие провожу не я',
-    organizer: 'Кто будет орзанизатором мероприятия?',
-    tgPlaceholder: '@Telegram-username',
     namePlaceholder: 'Название видеочата',
 };
 
 export const VideoChatForm = () => {
     const tgContext = useTgWebAppContext();
-    const [isChecked, setIsChecked] = useState<boolean>(false);
     const minDate = new Date().toISOString().slice(0, 16);
     const {
         register,
@@ -69,24 +64,8 @@ export const VideoChatForm = () => {
     const onFormSubmit = (data: FormInputs) => {
         // Отправляем данные о создании конференции в метрику
         ym && ym(93300398, 'reachGoal', 'video-chat-created');
-
-        // если организатор не указан - достаем его из объекта Telegram
-        if (!data.organizer) {
-            data.organizer = tgContext.tg.initDataUnsafe.user.username;
-        }
         tgContext.tg.sendData(JSON.stringify(data));
         reset();
-    };
-
-    const handleCheckboxChange = (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
-        setIsChecked(event.target.checked);
-        // Если галочка стояла, но пользователь передумал -
-        // откатываем поле организатор до значения текущего пользователя
-        if (isChecked) {
-            reset({ organizer: tgContext.tg.initDataUnsafe.user.username });
-        }
     };
 
     return (
@@ -219,41 +198,6 @@ export const VideoChatForm = () => {
                             </FormErrorMessage>
                         )}
                     </FormControl>
-                    <FormControl mb="20px" display="flex" alignItems="center">
-                        <Checkbox
-                            colorScheme="orange"
-                            isChecked={isChecked}
-                            onChange={handleCheckboxChange}
-                        />
-                        <FormLabel sx={formTextStyles} m="0" ml="10px">
-                            {strings.checkbox}
-                        </FormLabel>
-                    </FormControl>
-                    {isChecked && (
-                        <FormControl
-                            mb="20px"
-                            isInvalid={
-                                !!errors.organizer && touchedFields.organizer
-                            }
-                        >
-                            <FormLabel sx={formTextStyles}>
-                                {strings.organizer}
-                            </FormLabel>
-                            <Input
-                                sx={formTextStyles}
-                                {...register('organizer', {
-                                    required: errorMessages.required,
-                                })}
-                                type="text"
-                                placeholder={strings.tgPlaceholder}
-                            />
-                            {errors.organizer && (
-                                <FormErrorMessage>
-                                    {errors?.organizer.message}
-                                </FormErrorMessage>
-                            )}
-                        </FormControl>
-                    )}
                 </Box>
                 <Button
                     type="submit"

@@ -124,7 +124,7 @@ export const productDataArray = [
         photo: testProduct,
     },
     {
-        id: 1,
+        id: 2,
         name: 'Тест продукт',
         description:
             'Ad exercitation enim labore aliqua laborum tempor dolore exercitation aliqua Lorem sint quis est ut irure. Nisi elit non sit veniam fugiat cupidatat esse in. Ad minim sit in aliquip ipsum incididunt dolore laborum. Ut ea sit id exercitation ullamco duis elit amet non enim dolor nostrud',

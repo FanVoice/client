@@ -83,10 +83,10 @@ export const Main = () => {
             <Heading sx={h2TitleStyles}>Маркетплейс</Heading>
             <Tabs sx={tabsStyles} index={tabIndex} onChange={onTabChange}>
                 <TabList sx={tabListStyles}>
-                    <Tab sx={tabStyles} isSelected={tabIndex === 0}>
+                    <Tab sx={tabStyles}>
                         Все товары
                     </Tab>
-                    <Tab sx={tabStyles} isSelected={tabIndex === 1}>
+                    <Tab sx={tabStyles}>
                         Категории
                     </Tab>
                 </TabList>

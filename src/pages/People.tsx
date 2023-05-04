@@ -5,33 +5,37 @@ import { GoBackButton } from '../components/GoBackButton';
 import { useEffect, useState } from 'react';
 import Api from '../utils/api';
 import { CardList } from '../components/CardList';
-import { peopleProps, personDataType } from '../utils/types';
-import { personDataArray } from '../utils/MockData';
+import { PeopleType, peopleProps, personDataType } from '../utils/types';
 
 export const People = ({ type }: peopleProps) => {
-    const [personData, setPersonData] = useState<personDataType[] | undefined>(
-        undefined
-    );
+    const [people, setPeople] = useState<PeopleType[] | undefined>(undefined);
     const api = new Api();
 
+    let url: string;
+
+    if (type === 'athlete') {
+        url = 'athletes';
+    } else {
+        url = 'bloggers';
+    }
+
     useEffect(() => {
-        // api.getPersonInfo().then(
-        //     (res) => {
-        //         if (res?.data) {
-        //             setPersonData(res.data);
-        //         }
-        //     }
-        // );
-        setPersonData(personDataArray);
+        api.getCategory(url)
+            .then((res) => {
+                if (res?.data) {
+                    console.log(res);
+                    setPeople(res.data);
+                }
+            })
+            .catch((err) => console.log(err));
     }, []);
-    
     return (
         <VStack display="flex" justifyContent="center" gap="12px">
             <Heading sx={h2TitleWithButtonStyles}>
                 <GoBackButton />
                 {type === 'athlete' ? 'Спортсмены' : 'Блоггеры'}
             </Heading>
-            <CardList data={personData} component={PersonCard} />
+            <CardList data={people} component={PersonCard} />
         </VStack>
     );
 };

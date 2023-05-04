@@ -9,6 +9,7 @@ export const CardList = <T extends {}>({
 }) => {
     return (
         <List pt="20px" display="flex" flexDir="column" gap="20px">
+            
             {data?.map((card) => {
                 const Component = component;
                 return <Component data={card} />;

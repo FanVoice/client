@@ -6,25 +6,26 @@ import {
 } from '../../utils/styles';
 import { GoBackButton } from '../../components/GoBackButton';
 import { useNavigate } from 'react-router-dom';
-import rubin from '../../assets/clubs/RubinLogo2019.svg';
-import loko from '../../assets/clubs/FC_Lokomotiv 1.svg';
-import spartak from '../../assets/clubs/FC_Spartak_Moscow_Logo 1.svg';
-import ugmk from '../../assets/clubs/Ugmklogo 1.svg';
-import { clubDataArray } from '../../utils/MockData';
-
-type clubDataType = {
-    clubLogo: string;
-    id: number;
-};
-const clubData: clubDataType[] = [
-    { clubLogo: rubin, id: 1 },
-    { clubLogo: loko, id: 2 },
-    { clubLogo: spartak, id: 3 },
-    { clubLogo: ugmk, id: 4 },
-];
+import { useEffect, useState } from 'react';
+import Api from '../../utils/api';
+import { SportsType } from '../../utils/types';
 
 export const Clubs = () => {
     const navigate = useNavigate();
+    const [clubs, setClubs] = useState<SportsType[] | undefined>(undefined);
+    const api = new Api();
+
+    useEffect(() => {
+        api.getCategory('clubs')
+            .then((res) => {
+                if (res?.data) {
+                    console.log(res);
+                    setClubs(res.data);
+                }
+            })
+            .catch((err) => console.log(err));
+    }, []);
+
     return (
         <VStack display="flex" justifyContent="center">
             <Heading sx={h2TitleWithButtonStyles}>
@@ -32,12 +33,13 @@ export const Clubs = () => {
                 Клубы
             </Heading>
             <Box sx={categoriesContainerStyles}>
-                {clubDataArray.map((card) => {
+                {clubs?.map((card) => {
                     return (
                         <CategoryCard
-                            src={card.logo}
+                            key={card.id}
+                            src={card.photo}
                             onClick={() => {
-                                navigate(`/categories/clubs:${card.id}`);
+                                navigate(`/categories/clubs/${card.id}`);
                             }}
                         />
                     );

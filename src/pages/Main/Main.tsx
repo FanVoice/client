@@ -56,12 +56,12 @@ export const Main = () => {
 
     useEffect(() => {
         api.getCategories()
-        .then((res) => {
-            if (res?.data) {
-                setCategories(res.data);
-            }
-        })
-        .catch((err) => console.log(err));
+            .then((res) => {
+                if (res?.data) {
+                    setCategories(res.data);
+                }
+            })
+            .catch((err) => console.log(err));
     }, []);
 
     const onTabChange = () => {
@@ -115,6 +115,7 @@ export const Main = () => {
                         {categories?.map((card) => {
                             return (
                                 <CategoryCard
+                                    key={card.id}
                                     src={card.photo}
                                     title={card.name}
                                     onClick={() => {

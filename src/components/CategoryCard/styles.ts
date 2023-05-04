@@ -1,5 +1,5 @@
 export const cardStyles = {
-    minWidth: '154px',
+    width: '154px',
     padding: '20px 0',
     display: 'flex',
     flexDir: 'column',
@@ -10,6 +10,7 @@ export const cardStyles = {
 
 export const cardImageStyles = {
     margin: '0',
+    objectFit: 'cover'
 };
 
 export const cardBodyStyles = {

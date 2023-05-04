@@ -1,6 +1,6 @@
 import { baseUrl } from './constants';
 import axios from 'axios';
-import { CategoriesType, personDataType } from './types';
+import { CategoriesType, SportsType, personDataType } from './types';
 
 export default class Api {
   private readonly _baseUrl: string;
@@ -18,4 +18,9 @@ export default class Api {
     return axios.get<CategoriesType[]>(`${this._baseUrl}categories`)
       .catch((err) => console.log(err));
   }
+  getCategory(categoryId: string) {
+    return axios.get<SportsType[]>(`${this._baseUrl}categories/${categoryId}`)
+      .catch((err) => console.log(err));
+  }
+
 }

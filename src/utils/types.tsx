@@ -40,7 +40,25 @@ export type productDataType = {
 };
 
 export type CategoriesType = {
-    id: number;
+    id: string;
+    name: string;
+    photo: string;
+};
+
+export type SportsType = {
+    id: string;
+    name: string;
+    photo: string;
+};
+
+export type ClubsType = {
+    id: string;
+    name: string;
+    photo: string;
+};
+
+export type PeopleType = {
+    id: string;
     name: string;
     photo: string;
 };

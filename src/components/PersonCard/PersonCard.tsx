@@ -5,34 +5,33 @@ import {
     cardImageStyles,
     cardStyles,
 } from './styles';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import { useNavigate } from 'react-router-dom';
-import { personDataType } from '../../utils/types';
-
-export const PersonCard = ({
-    data
-}: {data: personDataType}) => {
+export const PersonCard = ({data}: any) => {
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleClick = () => {
-        if (data.type === 'athlete') {
-            navigate('/categories/athletes:slug');
+        if (location.pathname === '/categories/athletes') {
+            navigate(`/categories/athletes/${data.id}`);
         }
-        if (data.type === 'blogger') {
-            navigate('/categories/bloggers:slug');
+        if (location.pathname === '/categories/bloggers') {
+            navigate(`/categories/bloggers/${data.id}`);
         }
     };
 
     return (
-        <Card sx={cardStyles} onClick={handleClick}>
+        <Card key={data.id} sx={cardStyles} onClick={handleClick}>
             <Image src={data.photo} alt={data.name} sx={cardImageStyles} />
             <CardHeader p="0" sx={cardHeadingStyles}>
-                {data.name}
+                {JSON.stringify(data.name)}
             </CardHeader>
-            <CardBody sx={cardBodyStyles}>
+            {/* Пока что бэк не умеет отдавать более полную информацию, поэтому прячем этот блок}
+
+            {/* <CardBody sx={cardBodyStyles}>
                 <Tag>{data.sport_type_name}</Tag>
                 {data.type === 'athlete' ? <Tag>{data.club_name}</Tag> : null}
-            </CardBody>
+            </CardBody> */}
         </Card>
     );
 };

@@ -6,25 +6,21 @@ import {
     cardStyles,
 } from './styles';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { CategoriesType } from '../../utils/types';
 
-export const PersonCard = ({data}: any) => {
+export const PersonCard = ({ data }: {data: CategoriesType}) => {
     const navigate = useNavigate();
     const location = useLocation();
 
     const handleClick = () => {
-        if (location.pathname === '/categories/athletes') {
-            navigate(`/categories/athletes/${data.id}`);
-        }
-        if (location.pathname === '/categories/bloggers') {
-            navigate(`/categories/bloggers/${data.id}`);
-        }
+        navigate(`${location.pathname}/${data.id}`);
     };
 
     return (
         <Card key={data.id} sx={cardStyles} onClick={handleClick}>
             <Image src={data.photo} alt={data.name} sx={cardImageStyles} />
             <CardHeader p="0" sx={cardHeadingStyles}>
-                {JSON.stringify(data.name)}
+                {data.name}
             </CardHeader>
             {/* Пока что бэк не умеет отдавать более полную информацию, поэтому прячем этот блок}
 

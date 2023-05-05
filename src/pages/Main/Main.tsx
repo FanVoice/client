@@ -28,9 +28,11 @@ import { h2TitleStyles } from '../../utils/styles';
 import { useEffect, useState } from 'react';
 import { FilterPopup } from '../../components/FilterPopup/FilterPopup';
 import { CardList } from '../../components/CardList';
-import { productDataArray } from '../../utils/MockData';
 import Api from '../../utils/api';
 import { CategoriesType } from '../../utils/types';
+import AppSpinner from '../../components/Spinner';
+import AppError from '../../components/AppError/AppError';
+import { errorMessages } from '../../utils/constants';
 
 export const Main = () => {
     const navigate = useNavigate();
@@ -40,6 +42,12 @@ export const Main = () => {
     const [categories, setCategories] = useState<CategoriesType[] | undefined>(
         undefined
     );
+    const [items, setItems] = useState(undefined);
+    const [isItemsLoading, setIsItemsLoading] = useState<boolean>(false);
+    const [isItemsError, setIsItemsError] = useState<boolean>(false);
+    const [isCategoriesLoading, setIsCategoriesLoading] =
+        useState<boolean>(false);
+    const [isCategoriesError, setIsCategoriesError] = useState<boolean>(false);
     const { isOpen, onOpen, onClose } = useDisclosure();
     const api = new Api();
 
@@ -55,14 +63,29 @@ export const Main = () => {
     }, [location]);
 
     useEffect(() => {
-        api.getCategories()
-            .then((res) => {
-                if (res?.data) {
-                    setCategories(res.data);
-                }
-            })
-            .catch((err) => console.log(err));
-    }, []);
+        if (location.pathname === '/') {
+            setIsItemsLoading(true);
+            api.getItems()
+                .then((res) => {
+                    if (res?.data) {
+                        setItems(res.data);
+                    }
+                })
+                .catch(() => setIsItemsError(true))
+                .finally(() => setIsItemsLoading(false));
+        }
+        if (location.pathname === '/categories') {
+            setIsCategoriesLoading(true);
+            api.getCategories()
+                .then((res) => {
+                    if (res?.data) {
+                        setCategories(res.data);
+                    }
+                })
+                .catch(() => setIsCategoriesError(true))
+                .finally(() => setIsCategoriesLoading(false));
+        }
+    }, [location.pathname]);
 
     const onTabChange = () => {
         if (tabIndex === 0) {
@@ -78,17 +101,43 @@ export const Main = () => {
         onOpen();
     };
 
+    const onClick = (id: string | number) => {
+        navigate(`/categories/${id}`);
+    };
+
+    const renderItems = () => {
+        if (isItemsLoading) {
+            return <AppSpinner />;
+        } else {
+            return <CardList data={items} component={ProductCard} />;
+        }
+    };
+
+    const renderCategories = () => {
+        if (isCategoriesLoading) {
+            return <AppSpinner />;
+        } else {
+            return categories?.map((card) => {
+                return (
+                    <CategoryCard
+                        key={card.id}
+                        src={card.photo}
+                        title={card.name}
+                        id={card.id}
+                        onClick={onClick}
+                    />
+                );
+            });
+        }
+    };
+
     return (
         <VStack>
             <Heading sx={h2TitleStyles}>Маркетплейс</Heading>
             <Tabs sx={tabsStyles} index={tabIndex} onChange={onTabChange}>
                 <TabList sx={tabListStyles}>
-                    <Tab sx={tabStyles}>
-                        Все товары
-                    </Tab>
-                    <Tab sx={tabStyles}>
-                        Категории
-                    </Tab>
+                    <Tab sx={tabStyles}>Все товары</Tab>
+                    <Tab sx={tabStyles}>Категории</Tab>
                 </TabList>
                 <TabPanels>
                     <TabPanel sx={tabPanelAllCards}>
@@ -106,24 +155,18 @@ export const Main = () => {
                                 onClick={onFilterOpen}
                             />
                         </Box>
-                        <CardList
-                            data={productDataArray}
-                            component={ProductCard}
-                        />
+                        {isItemsError ? (
+                            <AppError errorMessage={errorMessages.base} />
+                        ) : (
+                            renderItems()
+                        )}
                     </TabPanel>
                     <TabPanel sx={tabPanelCategories}>
-                        {categories?.map((card) => {
-                            return (
-                                <CategoryCard
-                                    key={card.id}
-                                    src={card.photo}
-                                    title={card.name}
-                                    onClick={() => {
-                                        navigate(`/categories/${card.id}`);
-                                    }}
-                                />
-                            );
-                        })}
+                        {isCategoriesError ? (
+                            <AppError errorMessage={errorMessages.base} />
+                        ) : (
+                            renderCategories()
+                        )}
                     </TabPanel>
                 </TabPanels>
             </Tabs>

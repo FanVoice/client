@@ -17,7 +17,6 @@ import './styles.css';
 import { productDataType } from '../../utils/types';
 
 export const ProductCard = ({ data }: { data: productDataType }) => {
-    console.log(data);
     return (
         <Card key={data.id} sx={cardStyles}>
             <Image src={data.photo} alt={data.name} sx={cardImageStyles} />

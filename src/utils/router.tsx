@@ -39,7 +39,7 @@ export const router = createBrowserRouter([
                 element: <People type="athlete" />,
             },
             {
-                path: '/categories/athletes:slug',
+                path: '/categories/athletes/:slug',
                 element: <Person type="athlete" />,
             },
             {
@@ -47,7 +47,7 @@ export const router = createBrowserRouter([
                 element: <Clubs />,
             },
             {
-                path: '/categories/clubs:slug',
+                path: '/categories/clubs/:slug',
                 element: <Club />,
             },
             {
@@ -55,7 +55,7 @@ export const router = createBrowserRouter([
                 element: <People type="blogger" />,
             },
             {
-                path: '/categories/bloggers:slug',
+                path: '/categories/bloggers/:slug',
                 element: <Person type="blogger" />,
             },
             {

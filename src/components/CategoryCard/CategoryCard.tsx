@@ -5,16 +5,30 @@ import { h3TitleStyles } from '../../utils/styles';
 export type CategoryCardProps = {
     src: string;
     title?: string;
-    onClick: () => void;
+    id?: string | number;
+    onClick: (id: string | number) => void;
 };
-export const CategoryCard = ({ src, title, onClick }: CategoryCardProps) => {
+export const CategoryCard = ({
+    src,
+    title,
+    id,
+    onClick,
+}: CategoryCardProps) => {
+    const handleClick = (): void => {
+        if (id) {
+            onClick(id);
+        }
+    };
+
     return (
-        <Card sx={cardStyles} onClick={onClick}>
+        <Card sx={cardStyles} onClick={handleClick}>
             <CardBody sx={cardBodyStyles}>
                 <Image src={src} alt={title} sx={cardImageStyles} />
             </CardBody>
-            <CardHeader p='0' >
-                <Heading as='h3' sx={h3TitleStyles}>{title}</Heading>
+            <CardHeader p="0">
+                <Heading as="h3" sx={h3TitleStyles}>
+                    {title}
+                </Heading>
             </CardHeader>
         </Card>
     );

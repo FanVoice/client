@@ -1,4 +1,4 @@
-import { Box, VStack, Heading, IconButton } from '@chakra-ui/react';
+import { Box, VStack, Heading } from '@chakra-ui/react';
 import { CategoryCard } from '../../components/CategoryCard/CategoryCard';
 import {
     categoriesContainerStyles,
@@ -8,24 +8,48 @@ import { GoBackButton } from '../../components/GoBackButton';
 import { useNavigate } from 'react-router-dom';
 import Api from '../../utils/api';
 import { useEffect, useState } from 'react';
-import { SportsType } from '../../utils/types';
+import { CategoriesType } from '../../utils/types';
+import AppSpinner from '../../components/Spinner';
+import AppError from '../../components/AppError/AppError';
+import { errorMessages } from '../../utils/constants';
 
 export const Sports = () => {
     const navigate = useNavigate();
-    const [sports, setSports] = useState<SportsType[] | undefined>(undefined);
+    const [sports, setSports] = useState<CategoriesType[] | undefined>(undefined);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isError, setIsError] = useState<boolean | undefined>(undefined);
+
     const api = new Api();
 
     useEffect(() => {
+        setIsLoading(true);
         api.getCategory('sports')
             .then((res) => {
                 if (res?.data) {
-                    console.log(res);
                     setSports(res.data);
                 }
             })
-            .catch((err) => console.log(err));
+            .catch(() => setIsError(true))
+            .finally(() => setIsLoading(false));
     }, []);
-
+    const render = () => {
+        if (isLoading) {
+            return <AppSpinner />;
+        } else {
+            return sports?.map((sport) => {
+                return (
+                    <CategoryCard
+                        key={sport.id}
+                        src={sport.photo}
+                        title={sport.name}
+                        onClick={() => {
+                            navigate(`/categories/sports/${sport.id}`);
+                        }}
+                    />
+                );
+            });
+        }
+    };
     return (
         <VStack display="flex" justifyContent="center" width="390px">
             <Heading sx={h2TitleWithButtonStyles}>
@@ -33,18 +57,11 @@ export const Sports = () => {
                 Виды спорта
             </Heading>
             <Box sx={categoriesContainerStyles}>
-                {sports?.map((sport) => {
-                    return (
-                        <CategoryCard
-                            key={sport.id}
-                            src={sport.photo}
-                            title={sport.name}
-                            onClick={() => {
-                                navigate(`/categories/sports/${sport.id}`);
-                            }}
-                        />
-                    );
-                })}
+                {isError ? (
+                    <AppError errorMessage={errorMessages.base} />
+                ) : (
+                    render()
+                )}
             </Box>
         </VStack>
     );

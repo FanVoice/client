@@ -18,7 +18,7 @@ import { productDataType } from '../../utils/types';
 
 export const ProductCard = ({ data }: { data: productDataType }) => {
     return (
-        <Card sx={cardStyles}>
+        <Card key={data.id} sx={cardStyles}>
             <Image src={data.photo} alt={data.name} sx={cardImageStyles} />
             <CardHeader p="0" display="flex" alignContent='center' justifyContent='space-between'>
                 <Heading sx={cardHeadingStyles}>{data.name}</Heading>

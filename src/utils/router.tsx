@@ -35,19 +35,19 @@ export const router = createBrowserRouter([
                 element: <h1>Страница определенного спорта</h1>,
             },
             {
-                path: '/categories/authlets',
-                element: <People type="authlet" />,
+                path: '/categories/athletes',
+                element: <People type="athlete" />,
             },
             {
-                path: '/categories/authlets:slug',
-                element: <Person type="authlet" />,
+                path: '/categories/athletes/:slug',
+                element: <Person type="athlete" />,
             },
             {
                 path: '/categories/clubs',
                 element: <Clubs />,
             },
             {
-                path: '/categories/clubs:1',
+                path: '/categories/clubs/:slug',
                 element: <Club />,
             },
             {
@@ -55,7 +55,7 @@ export const router = createBrowserRouter([
                 element: <People type="blogger" />,
             },
             {
-                path: '/categories/bloggers:slug',
+                path: '/categories/bloggers/:slug',
                 element: <Person type="blogger" />,
             },
             {

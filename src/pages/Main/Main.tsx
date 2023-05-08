@@ -14,12 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { FilterIcon } from '../../components/FilterIcon';
 import { CategoryCard } from '../../components/CategoryCard/CategoryCard';
-import sport from '../../assets/sports.svg';
-import people from '../../assets/people.svg';
-import youtube from '../../assets/youtube.svg';
-import handball from '../../assets/handball.svg';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
-import testImg from '../../assets/test-product.png';
 import {
     tabsStyles,
     tabListStyles,
@@ -33,40 +28,64 @@ import { h2TitleStyles } from '../../utils/styles';
 import { useEffect, useState } from 'react';
 import { FilterPopup } from '../../components/FilterPopup/FilterPopup';
 import { CardList } from '../../components/CardList';
-import { productDataArray } from '../../utils/MockData';
-
-type categoriesType = {
-    categoryLogo: string;
-    id: number;
-    url: string;
-    title: string;
-};
-const categoriesData: categoriesType[] = [
-    { categoryLogo: sport, id: 1, url: 'sports', title: 'Виды спорта' },
-    { categoryLogo: people, id: 2, url: 'clubs', title: 'Клубы' },
-    { categoryLogo: youtube, id: 3, url: 'bloggers', title: 'Блогеры' },
-    { categoryLogo: handball, id: 4, url: 'authlets', title: 'Спортсмены' },
-];
+import Api from '../../utils/api';
+import { CategoriesType } from '../../utils/types';
+import AppSpinner from '../../components/Spinner';
+import AppError from '../../components/AppError/AppError';
+import { errorMessages } from '../../utils/constants';
 
 export const Main = () => {
     const navigate = useNavigate();
-    const locaion = useLocation();
+    const location = useLocation();
     const [tabIndex, setTabIndex] = useState<number>(0);
     const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
+    const [categories, setCategories] = useState<CategoriesType[] | undefined>(
+        undefined
+    );
+    const [items, setItems] = useState(undefined);
+    const [isItemsLoading, setIsItemsLoading] = useState<boolean>(false);
+    const [isItemsError, setIsItemsError] = useState<boolean>(false);
+    const [isCategoriesLoading, setIsCategoriesLoading] =
+        useState<boolean>(false);
+    const [isCategoriesError, setIsCategoriesError] = useState<boolean>(false);
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const api = new Api();
 
     useEffect(() => {
-        if (locaion.pathname === '/') {
-            console.log(0);
+        if (location.pathname === '/') {
             setTabIndex(0);
             return;
         }
-        if (locaion.pathname === '/categories') {
-            console.log(1);
+        if (location.pathname === '/categories') {
             setTabIndex(1);
             return;
         }
-    }, [locaion]);
+    }, [location]);
+
+    useEffect(() => {
+        if (location.pathname === '/') {
+            setIsItemsLoading(true);
+            api.getItems()
+                .then((res) => {
+                    if (res?.data) {
+                        setItems(res.data);
+                    }
+                })
+                .catch(() => setIsItemsError(true))
+                .finally(() => setIsItemsLoading(false));
+        }
+        if (location.pathname === '/categories') {
+            setIsCategoriesLoading(true);
+            api.getCategories()
+                .then((res) => {
+                    if (res?.data) {
+                        setCategories(res.data);
+                    }
+                })
+                .catch(() => setIsCategoriesError(true))
+                .finally(() => setIsCategoriesLoading(false));
+        }
+    }, [location.pathname]);
 
     const onTabChange = () => {
         if (tabIndex === 0) {
@@ -82,17 +101,43 @@ export const Main = () => {
         onOpen();
     };
 
+    const onClick = (id: string | number) => {
+        navigate(`/categories/${id}`);
+    };
+
+    const renderItems = () => {
+        if (isItemsLoading) {
+            return <AppSpinner />;
+        } else {
+            return <CardList data={items} component={ProductCard} />;
+        }
+    };
+
+    const renderCategories = () => {
+        if (isCategoriesLoading) {
+            return <AppSpinner />;
+        } else {
+            return categories?.map((card) => {
+                return (
+                    <CategoryCard
+                        key={card.id}
+                        src={card.photo}
+                        title={card.name}
+                        id={card.id}
+                        onClick={onClick}
+                    />
+                );
+            });
+        }
+    };
+
     return (
         <VStack>
             <Heading sx={h2TitleStyles}>Маркетплейс</Heading>
-                <Tabs sx={tabsStyles} index={tabIndex} onChange={onTabChange}>
+            <Tabs sx={tabsStyles} index={tabIndex} onChange={onTabChange}>
                 <TabList sx={tabListStyles}>
-                    <Tab sx={tabStyles} isSelected={tabIndex === 0}>
-                        Все товары
-                    </Tab>
-                    <Tab sx={tabStyles} isSelected={tabIndex === 1}>
-                        Категории
-                    </Tab>
+                    <Tab sx={tabStyles}>Все товары</Tab>
+                    <Tab sx={tabStyles}>Категории</Tab>
                 </TabList>
                 <TabPanels>
                     <TabPanel sx={tabPanelAllCards}>
@@ -110,23 +155,18 @@ export const Main = () => {
                                 onClick={onFilterOpen}
                             />
                         </Box>
-                        <CardList
-                            data={productDataArray}
-                            component={ProductCard}
-                        />
+                        {isItemsError ? (
+                            <AppError errorMessage={errorMessages.base} />
+                        ) : (
+                            renderItems()
+                        )}
                     </TabPanel>
                     <TabPanel sx={tabPanelCategories}>
-                        {categoriesData.map((card) => {
-                            return (
-                                <CategoryCard
-                                    src={card.categoryLogo}
-                                    title={card.title}
-                                    onClick={() => {
-                                        navigate(`/categories/${card.url}`);
-                                    }}
-                                />
-                            );
-                        })}
+                        {isCategoriesError ? (
+                            <AppError errorMessage={errorMessages.base} />
+                        ) : (
+                            renderCategories()
+                        )}
                     </TabPanel>
                 </TabPanels>
             </Tabs>

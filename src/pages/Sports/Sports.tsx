@@ -1,20 +1,55 @@
-import { Box, VStack, Heading, IconButton } from '@chakra-ui/react';
+import { Box, VStack, Heading } from '@chakra-ui/react';
 import { CategoryCard } from '../../components/CategoryCard/CategoryCard';
-import running from '../../assets/running.svg';
-import basketball from '../../assets/basketball.svg';
-import swimming from '../../assets/swimming.svg';
-import football from '../../assets/football.svg';
-import tennis from '../../assets/tennis.svg';
-import valleyball from '../../assets/sports.svg';
 import {
     categoriesContainerStyles,
     h2TitleWithButtonStyles,
 } from '../../utils/styles';
 import { GoBackButton } from '../../components/GoBackButton';
 import { useNavigate } from 'react-router-dom';
+import Api from '../../utils/api';
+import { useEffect, useState } from 'react';
+import { CategoriesType } from '../../utils/types';
+import AppSpinner from '../../components/Spinner';
+import AppError from '../../components/AppError/AppError';
+import { errorMessages } from '../../utils/constants';
 
 export const Sports = () => {
     const navigate = useNavigate();
+    const [sports, setSports] = useState<CategoriesType[] | undefined>(undefined);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isError, setIsError] = useState<boolean | undefined>(undefined);
+
+    const api = new Api();
+
+    useEffect(() => {
+        setIsLoading(true);
+        api.getCategory('sports')
+            .then((res) => {
+                if (res?.data) {
+                    setSports(res.data);
+                }
+            })
+            .catch(() => setIsError(true))
+            .finally(() => setIsLoading(false));
+    }, []);
+    const render = () => {
+        if (isLoading) {
+            return <AppSpinner />;
+        } else {
+            return sports?.map((sport) => {
+                return (
+                    <CategoryCard
+                        key={sport.id}
+                        src={sport.photo}
+                        title={sport.name}
+                        onClick={() => {
+                            navigate(`/categories/sports/${sport.id}`);
+                        }}
+                    />
+                );
+            });
+        }
+    };
     return (
         <VStack display="flex" justifyContent="center" width="390px">
             <Heading sx={h2TitleWithButtonStyles}>
@@ -22,48 +57,11 @@ export const Sports = () => {
                 Виды спорта
             </Heading>
             <Box sx={categoriesContainerStyles}>
-                <CategoryCard
-                    src={valleyball}
-                    title="Волейбол"
-                    onClick={() => {
-                        navigate('#');
-                    }}
-                />
-                <CategoryCard
-                    src={football}
-                    title="Футбол"
-                    onClick={() => {
-                        navigate('#');
-                    }}
-                />
-                <CategoryCard
-                    src={tennis}
-                    title="Теннис"
-                    onClick={() => {
-                        navigate('#');
-                    }}
-                />
-                <CategoryCard
-                    src={running}
-                    title="Бег"
-                    onClick={() => {
-                        navigate('#');
-                    }}
-                />
-                <CategoryCard
-                    src={swimming}
-                    title="Плавание"
-                    onClick={() => {
-                        navigate('#');
-                    }}
-                />
-                <CategoryCard
-                    src={basketball}
-                    title="Баскетбол"
-                    onClick={() => {
-                        navigate('#');
-                    }}
-                />
+                {isError ? (
+                    <AppError errorMessage={errorMessages.base} />
+                ) : (
+                    render()
+                )}
             </Box>
         </VStack>
     );

@@ -24,16 +24,33 @@ import { PersonCard } from '../../components/PersonCard/PersonCard';
 import { paragrapghStyles } from '../../utils/styles';
 import { HeaderWithLogo } from '../../components/HeaderWithLogo/HeaderWithLogo';
 import { CardList } from '../../components/CardList';
-import { clubData, personDataArray, productDataArray } from '../../utils/MockData';
+import { personDataArray, productDataArray } from '../../utils/MockData';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import Api from '../../utils/api';
+import { clubDataType } from '../../utils/types';
 
 export const Club = ({}) => {
+    const { slug } = useParams<{ slug?: string }>() || {};
+    const api = new Api();
+    const [club, setClub] = useState<clubDataType | undefined>(undefined);
+
+    useEffect(() => {
+        api.getClubInfo(slug).then((res) => {
+            if (res?.data) {
+                console.log(res)
+                setClub(res.data);
+            }
+        });
+    }, []);
+
     return (
         <VStack display="flex" justifyContent="center">
             <HeaderWithLogo />
             <HStack w="100%">
                 <Image
-                    src={clubData.logo}
-                    alt={clubData.club_name}
+                    src={club?.photo}
+                    alt={club?.name}
                     sx={cardImageStyles}
                     pr="20px"
                 />
@@ -43,21 +60,22 @@ export const Club = ({}) => {
                     justifyContent="space-between"
                 >
                     <Heading as="h4" sx={h4HeadingStyles}>
-                        {clubData.club_name}
+                    {club?.name}
                     </Heading>
-                    <HStack>
+                    {/* Пока бэк не умеет такое отдавать, поэтому прячу */}
+                    {/* <HStack>
                         <Text sx={paragrapghStyles}>Основан: </Text>
                         <Text sx={paragrapghStyles}>
-                            {clubData.founding_date}
+                            {club.founding_date}
                         </Text>
-                    </HStack>
+                    </HStack> */}
                 </VStack>
             </HStack>
 
             <Heading as="h4" sx={h4HeadingStyles} width="100%" mt="13px">
                 О клубе
             </Heading>
-            <Text sx={paragrapghStyles}>{clubData.description}</Text>
+            <Text sx={paragrapghStyles}>{club?.description}</Text>
             <Tabs sx={tabsStyles}>
                 <TabList sx={tabListStyles}>
                     <Tab sx={tabStyles}>Спортсмены</Tab>
@@ -65,9 +83,11 @@ export const Club = ({}) => {
                 </TabList>
                 <TabPanels>
                     <TabPanel sx={tabPanelAllCards}>
+                        {/* заменить на данные с сервера */}
                         <CardList data={personDataArray} component={PersonCard} />
                     </TabPanel>
                     <TabPanel sx={tabPanelCategories}>
+                        {/* заменить на данные с сервера */}
                         <CardList data={productDataArray} component={ProductCard} />
                     </TabPanel>
                 </TabPanels>

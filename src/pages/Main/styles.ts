@@ -33,6 +33,7 @@ export const tabPanelCategories = {
     gap: '20px',
     mt: '34px',
     flexWrap: 'wrap',
+    w: '100%',
 };
 
 export const iconButtonStyles = {

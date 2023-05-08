@@ -6,25 +6,54 @@ import {
 } from '../../utils/styles';
 import { GoBackButton } from '../../components/GoBackButton';
 import { useNavigate } from 'react-router-dom';
-import rubin from '../../assets/clubs/RubinLogo2019.svg';
-import loko from '../../assets/clubs/FC_Lokomotiv 1.svg';
-import spartak from '../../assets/clubs/FC_Spartak_Moscow_Logo 1.svg';
-import ugmk from '../../assets/clubs/Ugmklogo 1.svg';
-import { clubDataArray } from '../../utils/MockData';
-
-type clubDataType = {
-    clubLogo: string;
-    id: number;
-};
-const clubData: clubDataType[] = [
-    { clubLogo: rubin, id: 1 },
-    { clubLogo: loko, id: 2 },
-    { clubLogo: spartak, id: 3 },
-    { clubLogo: ugmk, id: 4 },
-];
+import { useEffect, useState } from 'react';
+import Api from '../../utils/api';
+import { CategoriesType } from '../../utils/types';
+import AppSpinner from '../../components/Spinner';
+import AppError from '../../components/AppError/AppError';
+import { errorMessages } from '../../utils/constants';
 
 export const Clubs = () => {
     const navigate = useNavigate();
+    const [clubs, setClubs] = useState<CategoriesType[] | undefined>(undefined);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isError, setIsError] = useState<boolean |undefined>(undefined);
+
+    const api = new Api();
+
+    useEffect(() => {
+        setIsLoading(true);
+        api.getCategory('clubs')
+            .then((res) => {
+                if (res?.data) {
+                    setClubs(res.data);
+                }
+            })
+            .catch(() => setIsError(true))
+            .finally(() => setIsLoading(false));
+    }, []);
+
+    const onClick = (id: string | number) => {
+        navigate(`/categories/clubs/${id}`);
+    };
+
+    const render = () => {
+        if (isLoading) {
+            return <AppSpinner />;
+        } else {
+            return clubs?.map((card) => {
+                return (
+                    <CategoryCard
+                        key={card.id}
+                        src={card.photo}
+                        id={card.id}
+                        onClick={onClick}
+                    />
+                );
+            });
+        }
+    };
+
     return (
         <VStack display="flex" justifyContent="center">
             <Heading sx={h2TitleWithButtonStyles}>
@@ -32,16 +61,7 @@ export const Clubs = () => {
                 Клубы
             </Heading>
             <Box sx={categoriesContainerStyles}>
-                {clubDataArray.map((card) => {
-                    return (
-                        <CategoryCard
-                            src={card.logo}
-                            onClick={() => {
-                                navigate(`/categories/clubs:${card.id}`);
-                            }}
-                        />
-                    );
-                })}
+                {isError ? <AppError errorMessage={errorMessages.base} /> : render()}
             </Box>
         </VStack>
     );

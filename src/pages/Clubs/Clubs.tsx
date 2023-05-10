@@ -18,7 +18,7 @@ export const Clubs = () => {
     const navigate = useNavigate();
     const [clubs, setClubs] = useState<CategoriesType[] | undefined>(undefined);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [isError, setIsError] = useState<boolean |undefined>(undefined);
+    const [isError, setIsError] = useState<boolean | undefined>(undefined);
 
     const api = new Api();
 
@@ -47,6 +47,8 @@ export const Clubs = () => {
                     <CategoryCard
                         key={card.id}
                         src={card.photo || noPhoto}
+                        alt={card.photo ? card.name : 'Изображение недоступно'}
+                        title={card.name}
                         id={card.id}
                         onClick={onClick}
                     />

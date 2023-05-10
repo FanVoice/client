@@ -11,7 +11,3 @@ export const logoStyles = {
     top: '-10px',
     right: '0',
 };
-
-export const h4HeadingStyles = {
-    fontSize: 'md',
-};

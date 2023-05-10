@@ -42,7 +42,7 @@ export const Main = () => {
     const [categories, setCategories] = useState<CategoriesType[] | undefined>(
         undefined
     );
-    const [items, setItems] = useState<productDataType[] | undefined>(undefined);
+    const [items, setItems] = useState<productDataType[]>([]);
     const [isItemsLoading, setIsItemsLoading] = useState<boolean>(false);
     const [isItemsError, setIsItemsError] = useState<boolean>(false);
     const [isCategoriesLoading, setIsCategoriesLoading] =
@@ -123,6 +123,7 @@ export const Main = () => {
                         key={card.id}
                         src={card.photo}
                         title={card.name}
+                        alt={card.photo ? card.name : 'Изображение недоступно'}
                         id={card.id}
                         onClick={onClick}
                     />

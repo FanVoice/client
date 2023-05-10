@@ -1,40 +1,45 @@
 import Slider from 'react-slick';
-import { ReactNode } from "react";
-
+import { ReactNode } from 'react';
 
 type SliderProps = {
-  dots?: boolean;
-  appendDots?: (dots: ReactNode) => React.ReactElement;
-  customPaging?: () => React.ReactElement;
-  infinite?: boolean;
-  speed?: number;
-  slidesToShow?: number;
-  slidesToScroll?: number;
-  children: React.ReactNode[];
+    dots?: boolean;
+    appendDots?: (dots: ReactNode) => React.ReactElement;
+    infinite?: boolean;
+    speed?: number;
+    slidesToShow?: number;
+    slidesToScroll?: number;
+    children: React.ReactNode[] | ReactNode;
 };
-
-export const AppSlider = ({
-  dots = true,
-  appendDots = (dots) => (
+const dotsComponent = (dots: ReactNode) => (
     <div>
-      <ul style={{ paddingLeft: '0', marginLeft: '0' }}> {dots}</ul>
+        <ul style={{ paddingLeft: '0', marginLeft: '0' }}> {dots}</ul>
     </div>
-  ),
-  infinite = true,
-  speed = 500,
-  slidesToShow = 1,
-  slidesToScroll = 1,
-  children,
+);
+export const AppSlider = ({
+    // Наличие точек, которые показывают на каком слайде находимся
+    dots = true,
+    // Добавление разметки точек
+    appendDots = dotsComponent,
+    // После последнего слайда переходим ли снова на первый
+    infinite = true,
+    // Плавность переключения картинок
+    speed = 500,
+    // Сколько слайдов показывается
+    slidesToShow = 1,
+    // На сколько слайдов переворачиваем при прокрутке
+    slidesToScroll = 1,
+    children,
 }: SliderProps) => {
-  return (
-    <Slider dots={dots}
-      infinite={infinite}
-      speed={speed}
-      slidesToShow={slidesToShow}
-      slidesToScroll={slidesToScroll}
-      appendDots={appendDots}
-    >
-      {children}
-    </Slider>
-  );
+    return (
+        <Slider
+            dots={dots}
+            infinite={infinite}
+            speed={speed}
+            slidesToShow={slidesToShow}
+            slidesToScroll={slidesToScroll}
+            appendDots={appendDots}
+        >
+            {children}
+        </Slider>
+    );
 };

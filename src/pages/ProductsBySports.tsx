@@ -7,9 +7,7 @@ import { ProductCard } from '../components/ProductCard/ProductCard';
 import { HeaderWithLogo } from '../components/HeaderWithLogo/HeaderWithLogo';
 
 export const ProductBySports = () => {
-    const [recommended, setRecommended] = useState<
-        productDataType[] | undefined
-    >(undefined);
+    const [recommended, setRecommended] = useState<productDataType[]>([]);
     const api = new Api();
     const { slug } = useParams<{ slug?: string }>() || {};
 

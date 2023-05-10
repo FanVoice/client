@@ -2,7 +2,6 @@ export const cardStyles = {
     height: '293px',
     cursor: 'pointer',
     w: '100%',
-    maxWidth: '100%'
 };
 
 export const cardImageStyles = {

@@ -1,16 +1,14 @@
 import { HeaderWithLogo } from '../../components/HeaderWithLogo/HeaderWithLogo';
 import { AppSlider } from '../../components/Slider/Slider';
-import testImg from '../../assets/athletes.png';
 import { useParams } from 'react-router-dom';
 import Api from '../../utils/api';
 import { useEffect, useState } from 'react';
-import { clubDataType, productDataType } from '../../utils/types';
+import { productDataType } from '../../utils/types';
 import '../../../node_modules/slick-carousel/slick/slick.css';
 import '../../../node_modules/slick-carousel/slick/slick-theme.css';
 import './styles.css';
 import { HStack, Heading, Image, Text } from '@chakra-ui/react';
-import { paragrapghStyles } from '../../utils/styles';
-import { h4HeadingStyles } from '../Person/styles';
+import { h4HeadingStyles, paragrapghStyles } from '../../utils/styles';
 import { BaseButton } from '../../components/BaseButton';
 import noPhoto from '../../assets/no-image.png';
 
@@ -18,7 +16,8 @@ const Product = () => {
     const { slug } = useParams<{ slug?: string }>() || {};
     const api = new Api();
     const [item, setItem] = useState<productDataType | undefined>(undefined);
-    const [club, setClub] = useState<clubDataType | undefined>(undefined);
+    // TODO: информация о спортсмене или клубе пока некорректно отдается с бэка
+    // const [club, setClub] = useState<clubDataType | undefined>(undefined);
 
     useEffect(() => {
         api.getItem(slug).then((res) => {
@@ -27,27 +26,27 @@ const Product = () => {
             }
         });
     }, []);
-
-    useEffect(() => {
-        if (item) {
-            api.getClubInfo(item?.club_id).then((res) => {
-                if (res?.data) {
-                    setClub(res.data);
-                }
-            });
+    const renderPhoto = (data: productDataType | undefined) => {
+        if (data?.photo && typeof data?.photo === 'string') {
+            return <Image src={data?.photo} alt={item?.name} />;
         }
-    }, [item]);
-
+        if (data?.photo && typeof data?.photo === 'object') {
+            return (
+                <AppSlider>
+                    {/* TODO: Заменить Тест img когда в бэк положат норм данные */}
+                    {data?.photo?.map((image: string) => {
+                        return <img src={image} alt={data.name} />;
+                    })}
+                </AppSlider>
+            );
+        }
+        return <Image src={noPhoto} alt={'Изображение недоступно'} />;
+    };
     return (
         <>
             <HeaderWithLogo />
-
             <div className="slider">
-                <AppSlider>
-                    {/* Заменить Тест img когда в бэк положат норм данные */}
-                    <img src={testImg} alt="Image 1" />
-                    <img src={item?.photo || noPhoto} alt="Image 1" />
-                </AppSlider>
+                {renderPhoto(item)}
                 <HStack
                     mt="63px"
                     width="100%"
@@ -61,7 +60,8 @@ const Product = () => {
                 <Text mt="11px" sx={paragrapghStyles}>
                     {item?.description}
                 </Text>
-                <HStack
+                {/* TODO: бэк пока некорректно отдает данные о связанном с продуктом спортсмене/клубе */}
+                {/* <HStack
                     mt="35px"
                     display="flex"
                     justifyContent="flex-end"
@@ -76,9 +76,10 @@ const Product = () => {
                         alt={club?.name}
                         overflow="hidden"
                     />
-                </HStack>
+                </HStack> */}
                 <BaseButton
                     buttonText="Приобрести"
+                    // TODO: кнопка пока ничего не делает
                     onClick={() => console.log('test')}
                 />
             </div>

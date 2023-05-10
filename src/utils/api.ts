@@ -48,7 +48,7 @@ export default class Api {
         return axios.get<productDataType>(`${this._baseUrl}item/${itemId}`);
     }
 
-    // Пока такого роута нет
+    // TODO: Пока такого роута нет
 
     // getRecommendedPeople(category: any, subcategory: any) {
     //     return axios.get<productDataType[]>(`${this._baseUrl}people`, {

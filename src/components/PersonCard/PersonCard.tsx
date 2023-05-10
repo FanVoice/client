@@ -9,7 +9,7 @@ import {
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CategoriesType } from '../../utils/types';
 
-export const PersonCard = ({ data }: {data: CategoriesType}) => {
+export const PersonCard = ({ data }: { data: CategoriesType }) => {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -19,11 +19,11 @@ export const PersonCard = ({ data }: {data: CategoriesType}) => {
 
     return (
         <Card key={data.id} sx={cardStyles} onClick={handleClick}>
-            <Image src={data.photo || noPhoto} alt={data.name} sx={cardImageStyles} />
+            <Image src={data.photo || noPhoto} alt={data.photo ? data.name : 'Изображение недоступно'} sx={cardImageStyles} />
             <CardHeader p="0" sx={cardHeadingStyles}>
                 {data.name}
             </CardHeader>
-            {/* Пока что бэк не умеет отдавать более полную информацию, поэтому прячем этот блок}
+            {/* TODO: Пока что бэк не умеет отдавать более полную информацию, поэтому прячем этот блок}
 
             {/* <CardBody sx={cardBodyStyles}>
                 <Tag>{data.sport_type_name}</Tag>

@@ -1,7 +1,7 @@
 import { VStack, Heading, Image, HStack, Text, List } from '@chakra-ui/react';
-import { paragrapghStyles } from '../../utils/styles';
+import { h4HeadingStyles, paragrapghStyles } from '../../utils/styles';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
-import { cardImageStyles, h4HeadingStyles } from './styles';
+import { cardImageStyles} from './styles';
 import { HeaderWithLogo } from '../../components/HeaderWithLogo/HeaderWithLogo';
 import { peopleProps, personDataType, productDataType } from '../../utils/types';
 import { CardList } from '../../components/CardList';
@@ -14,7 +14,7 @@ export const Person = ({ type }: peopleProps) => {
     const { slug } = useParams<{ slug?: string }>() || {};
     const api = new Api();
     const [person, setPerson] = useState<personDataType | undefined>(undefined);
-    const [recommended, setRecommended] = useState<productDataType[] | undefined>(undefined);
+    const [recommended, setRecommended] = useState<productDataType[]>([]);
 
     useEffect(() => {
         api.getPersonInfo(slug).then((res) => {
@@ -34,7 +34,7 @@ export const Person = ({ type }: peopleProps) => {
             <HeaderWithLogo />
             <Image
                 src={person?.photo || noPhoto}
-                alt={person?.name}
+                alt={person?.photo ? person?.name : 'Изображение недоступно'}
                 sx={cardImageStyles}
             />
             <HStack width="100%" display="flex" justifyContent="space-between">

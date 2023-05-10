@@ -11,7 +11,7 @@ import AppError from '../components/AppError/AppError';
 import { errorMessages } from '../utils/constants';
 
 export const People = ({ type }: peopleProps) => {
-    const [people, setPeople] = useState<CategoriesType[] | undefined>(undefined);
+    const [people, setPeople] = useState<CategoriesType[]>([]);
     const [isLoading, setIsLoading] = useState<boolean | undefined>(false);
     const [isError, setIsError] = useState<boolean | undefined>(undefined)
     const api = new Api();

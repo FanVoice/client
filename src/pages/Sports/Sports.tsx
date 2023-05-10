@@ -48,6 +48,7 @@ export const Sports = () => {
                         id={sport.id}
                         src={sport.photo}
                         title={sport.name}
+                        alt={sport.photo ? sport.name : 'Изображение недоступно'}
                         onClick={onClick}
                     />
                 );

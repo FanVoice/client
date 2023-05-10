@@ -11,7 +11,6 @@ import {
     Box,
     Button,
     NumberInputField,
-    Checkbox,
     NumberInput,
     NumberInputStepper,
     NumberIncrementStepper,
@@ -51,10 +50,10 @@ export const VideoChatForm = () => {
         register,
         reset,
         handleSubmit,
+        getValues,
         formState: { errors, isValid, touchedFields },
     } = useForm<FormInputs>({
-        mode: 'onChange',
-        reValidateMode: 'onChange',
+        mode: 'all',
     });
 
     useEffect(() => {
@@ -142,18 +141,20 @@ export const VideoChatForm = () => {
                         <FormLabel sx={formTextStyles}>
                             {strings.duration}
                         </FormLabel>
-                        <NumberInput
-                            defaultValue={30}
-                            sx={formTextStyles}
-                            {...register('duration', {
-                                pattern: {
-                                    value: /^[0-9]*$/,
-                                    message: errorMessages.useNumber,
-                                },
-                                required: errorMessages.required,
-                            })}
-                        >
-                            <NumberInputField />
+                        <NumberInput sx={formTextStyles} defaultValue={30}>
+                            <NumberInputField
+                                {...register('duration', {
+                                    pattern: {
+                                        value: /^[0-9]*$/,
+                                        message: errorMessages.useNumber,
+                                    },
+                                    min: {
+                                        value: 0,
+                                        message: errorMessages.biggerThanZero,
+                                    },
+                                    required: errorMessages.required,
+                                })}
+                            />
                             <NumberInputStepper>
                                 <NumberIncrementStepper />
                                 <NumberDecrementStepper />
@@ -175,18 +176,29 @@ export const VideoChatForm = () => {
                         <FormLabel sx={formTextStyles}>
                             {strings.durationForOne}
                         </FormLabel>
-                        <NumberInput
-                            defaultValue={30}
-                            sx={formTextStyles}
-                            {...register('durationForOne', {
-                                pattern: {
-                                    value: /^[0-9]*$/,
-                                    message: errorMessages.useNumber,
-                                },
-                                required: errorMessages.required,
-                            })}
-                        >
-                            <NumberInputField />
+                        <NumberInput sx={formTextStyles} defaultValue={30}>
+                            <NumberInputField
+                                {...register('durationForOne', {
+                                    pattern: {
+                                        value: /^[0-9]*$/,
+                                        message: errorMessages.useNumber,
+                                    },
+                                    min: {
+                                        value: 0,
+                                        message: errorMessages.biggerThanZero,
+                                    },
+                                    validate: (value) => {
+                                        if (
+                                            parseInt(value) >
+                                            parseInt(getValues('duration'))
+                                        ) {
+                                            return errorMessages.notBiggerThanDuration;
+                                        }
+                                        return true;
+                                    },
+                                    required: errorMessages.required,
+                                })}
+                            />
                             <NumberInputStepper>
                                 <NumberIncrementStepper />
                                 <NumberDecrementStepper />

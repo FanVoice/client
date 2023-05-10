@@ -11,7 +11,6 @@ import {
     Box,
     Button,
     NumberInputField,
-    Checkbox,
     NumberInput,
     NumberInputStepper,
     NumberIncrementStepper,
@@ -53,8 +52,7 @@ export const ConferenceForm = () => {
         handleSubmit,
         formState: { errors, isValid, touchedFields },
     } = useForm<FormInputs>({
-        mode: 'onChange',
-        reValidateMode: 'onChange',
+        mode: 'all',
     });
 
     useEffect(() => {
@@ -142,18 +140,20 @@ export const ConferenceForm = () => {
                         <FormLabel sx={formTextStyles}>
                             {strings.duration}
                         </FormLabel>
-                        <NumberInput
-                            defaultValue={30}
-                            sx={formTextStyles}
-                            {...register('duration', {
-                                pattern: {
-                                    value: /^[0-9]*$/,
-                                    message: errorMessages.useNumber,
-                                },
-                                required: errorMessages.required,
-                            })}
-                        >
-                            <NumberInputField />
+                        <NumberInput sx={formTextStyles} defaultValue={30}>
+                            <NumberInputField
+                                {...register('duration', {
+                                    pattern: {
+                                        value: /^[0-9]*$/,
+                                        message: errorMessages.useNumber,
+                                    },
+                                    min: {
+                                        value: 0,
+                                        message: errorMessages.biggerThanZero,
+                                    },
+                                    required: errorMessages.required,
+                                })}
+                            />
                             <NumberInputStepper>
                                 <NumberIncrementStepper />
                                 <NumberDecrementStepper />
@@ -174,18 +174,16 @@ export const ConferenceForm = () => {
                         <FormLabel sx={formTextStyles}>
                             {strings.max_persons}
                         </FormLabel>
-                        <NumberInput
-                            defaultValue={100}
-                            sx={formTextStyles}
-                            {...register('max_persons', {
-                                pattern: {
-                                    value: /^[0-9]*$/,
-                                    message: errorMessages.useNumber,
-                                },
-                                required: errorMessages.required,
-                            })}
-                        >
-                            <NumberInputField />
+                        <NumberInput sx={formTextStyles} defaultValue={100}>
+                            <NumberInputField
+                                {...register('max_persons', {
+                                    pattern: {
+                                        value: /^[0-9]*$/,
+                                        message: errorMessages.useNumber,
+                                    },
+                                    required: errorMessages.required,
+                                })}
+                            />
                             <NumberInputStepper>
                                 <NumberIncrementStepper />
                                 <NumberDecrementStepper />

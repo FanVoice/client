@@ -42,6 +42,7 @@ export const h2TitleWithButtonStyles = {
     position: 'relative',
     width: '328px',
     textAlign: 'center',
+    height: '44px',
 };
 
 export const paragrapghStyles = {

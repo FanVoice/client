@@ -5,7 +5,7 @@ import { GoBackButton } from '../components/GoBackButton';
 import { useEffect, useState } from 'react';
 import Api from '../utils/api';
 import { CardList } from '../components/CardList';
-import { CategoriesType, peopleProps, personDataType } from '../utils/types';
+import { CategoriesType, peopleProps} from '../utils/types';
 import AppSpinner from '../components/Spinner';
 import AppError from '../components/AppError/AppError';
 import { errorMessages } from '../utils/constants';
@@ -14,9 +14,7 @@ export const People = ({ type }: peopleProps) => {
     const [people, setPeople] = useState<CategoriesType[] | undefined>(undefined);
     const [isLoading, setIsLoading] = useState<boolean | undefined>(false);
     const [isError, setIsError] = useState<boolean | undefined>(undefined)
-
     const api = new Api();
-
     let url: string;
 
     if (type === 'athlete') {
@@ -37,7 +35,6 @@ export const People = ({ type }: peopleProps) => {
         api.getCategory(url)
             .then((res) => {
                 if (res?.data) {
-                    console.log(res);
                     setPeople(res.data);
                 }
             })

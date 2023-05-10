@@ -11,6 +11,8 @@ import { ConferenceForm } from '../pages/Forms/ConferenceForm';
 import { Person } from '../pages/Person/Person';
 import { People } from '../pages/People';
 import { Club } from '../pages/Club/Club';
+import { ProductBySports } from '../pages/ProductsBySports';
+import Product from '../pages/Product/Product';
 
 export const router = createBrowserRouter([
     {
@@ -23,6 +25,10 @@ export const router = createBrowserRouter([
                 element: <Main />,
             },
             {
+                path: 'items/:slug',
+                element: <Product />,
+            },
+            {
                 path: 'categories',
                 element: <Main />,
             },
@@ -32,7 +38,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/categories/sports/:slug',
-                element: <h1>Страница определенного спорта</h1>,
+                element: <ProductBySports />,
             },
             {
                 path: '/categories/athletes',

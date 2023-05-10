@@ -29,7 +29,7 @@ import { useEffect, useState } from 'react';
 import { FilterPopup } from '../../components/FilterPopup/FilterPopup';
 import { CardList } from '../../components/CardList';
 import Api from '../../utils/api';
-import { CategoriesType } from '../../utils/types';
+import { CategoriesType, productDataType } from '../../utils/types';
 import AppSpinner from '../../components/Spinner';
 import AppError from '../../components/AppError/AppError';
 import { errorMessages } from '../../utils/constants';
@@ -42,7 +42,7 @@ export const Main = () => {
     const [categories, setCategories] = useState<CategoriesType[] | undefined>(
         undefined
     );
-    const [items, setItems] = useState(undefined);
+    const [items, setItems] = useState<productDataType[] | undefined>(undefined);
     const [isItemsLoading, setIsItemsLoading] = useState<boolean>(false);
     const [isItemsError, setIsItemsError] = useState<boolean>(false);
     const [isCategoriesLoading, setIsCategoriesLoading] =

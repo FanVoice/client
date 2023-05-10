@@ -12,6 +12,7 @@ import { CategoriesType } from '../../utils/types';
 import AppSpinner from '../../components/Spinner';
 import AppError from '../../components/AppError/AppError';
 import { errorMessages } from '../../utils/constants';
+import noPhoto from '../../assets/no-image.png';
 
 export const Clubs = () => {
     const navigate = useNavigate();
@@ -45,7 +46,7 @@ export const Clubs = () => {
                 return (
                     <CategoryCard
                         key={card.id}
-                        src={card.photo}
+                        src={card.photo || noPhoto}
                         id={card.id}
                         onClick={onClick}
                     />

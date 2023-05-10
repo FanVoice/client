@@ -22,7 +22,7 @@ export const checkBoxContainerStyles = {
     justifyContent: 'space-between',
 };
 
-//ертикальные отступы между горизонтальными группами элементов
+//Вертикальные отступы между горизонтальными группами элементов
 export const elementSpacingStyles = {
     mb: '26px',
 };

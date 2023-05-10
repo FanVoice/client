@@ -1,6 +1,7 @@
-import { Card, CardBody, CardHeader, Image, Tag } from '@chakra-ui/react';
+import { Card, CardHeader, Image } from '@chakra-ui/react';
+import noPhoto from '../../assets/no-image.png';
+
 import {
-    cardBodyStyles,
     cardHeadingStyles,
     cardImageStyles,
     cardStyles,
@@ -18,7 +19,7 @@ export const PersonCard = ({ data }: {data: CategoriesType}) => {
 
     return (
         <Card key={data.id} sx={cardStyles} onClick={handleClick}>
-            <Image src={data.photo} alt={data.name} sx={cardImageStyles} />
+            <Image src={data.photo || noPhoto} alt={data.name} sx={cardImageStyles} />
             <CardHeader p="0" sx={cardHeadingStyles}>
                 {data.name}
             </CardHeader>

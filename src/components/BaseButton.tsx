@@ -8,7 +8,7 @@ export const BaseButton = ({
     onClick: () => void;
 }) => {
     return (
-        <Button colorScheme="orange" w="328px" h="48px" onClick={onClick}>
+        <Button colorScheme="orange" w="328px" h="48px" onClick={onClick} m='36px 0'>
             {buttonText}
         </Button>
     );

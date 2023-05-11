@@ -11,6 +11,7 @@ export const cardImageStyles = {
     margin: '0',
     borderTopStartRadius: '6px',
     borderTopEndRadius: '6px',
+    objectFit: 'cover',
 };
 
 export const cardHeadingStyles = {

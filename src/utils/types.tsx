@@ -33,9 +33,9 @@ export type productDataType = {
     event_type: string | null;
     sport_type: number | null;
     person_id: number | null;
-    club_id: number | null;
+    club_id: string;
     tags: string | null;
-    photo: string;
+    photo: string | string[];
 };
 
 export type CategoriesType = {

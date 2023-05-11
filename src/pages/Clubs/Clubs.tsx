@@ -12,12 +12,13 @@ import { CategoriesType } from '../../utils/types';
 import AppSpinner from '../../components/Spinner';
 import AppError from '../../components/AppError/AppError';
 import { errorMessages } from '../../utils/constants';
+import noPhoto from '../../assets/no-image.png';
 
 export const Clubs = () => {
     const navigate = useNavigate();
     const [clubs, setClubs] = useState<CategoriesType[] | undefined>(undefined);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [isError, setIsError] = useState<boolean |undefined>(undefined);
+    const [isError, setIsError] = useState<boolean | undefined>(undefined);
 
     const api = new Api();
 
@@ -45,7 +46,9 @@ export const Clubs = () => {
                 return (
                     <CategoryCard
                         key={card.id}
-                        src={card.photo}
+                        src={card.photo || noPhoto}
+                        alt={card.photo ? card.name : 'Изображение недоступно'}
+                        title={card.name}
                         id={card.id}
                         onClick={onClick}
                     />

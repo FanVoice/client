@@ -1,12 +1,12 @@
 import { VStack, Heading, Image, HStack, Text, List } from '@chakra-ui/react';
-import { paragrapghStyles } from '../../utils/styles';
+import { h4HeadingStyles, paragrapghStyles } from '../../utils/styles';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
-import { cardImageStyles, h4HeadingStyles } from './styles';
+import { cardImageStyles} from './styles';
 import { HeaderWithLogo } from '../../components/HeaderWithLogo/HeaderWithLogo';
-import { peopleProps, personDataType } from '../../utils/types';
-import { productDataArray } from '../../utils/MockData';
+import { peopleProps, personDataType, productDataType } from '../../utils/types';
 import { CardList } from '../../components/CardList';
 import { useParams } from 'react-router-dom';
+import noPhoto from '../../assets/no-image.png';
 import { useEffect, useState } from 'react';
 import Api from '../../utils/api';
 
@@ -14,11 +14,17 @@ export const Person = ({ type }: peopleProps) => {
     const { slug } = useParams<{ slug?: string }>() || {};
     const api = new Api();
     const [person, setPerson] = useState<personDataType | undefined>(undefined);
+    const [recommended, setRecommended] = useState<productDataType[]>([]);
 
     useEffect(() => {
         api.getPersonInfo(slug).then((res) => {
             if (res?.data) {
                 setPerson(res.data);
+            }
+        });
+        api.getRecommendedItems(`${type === 'athlete' ? 'athletes' : 'bloggers'}`, slug).then((res) => {
+            if (res?.data) {
+                setRecommended(res?.data);
             }
         });
     }, []);
@@ -27,8 +33,8 @@ export const Person = ({ type }: peopleProps) => {
         <VStack display="flex" justifyContent="center">
             <HeaderWithLogo />
             <Image
-                src={person?.photo}
-                alt={person?.name}
+                src={person?.photo || noPhoto}
+                alt={person?.photo ? person?.name : 'Изображение недоступно'}
                 sx={cardImageStyles}
             />
             <HStack width="100%" display="flex" justifyContent="space-between">
@@ -57,8 +63,7 @@ export const Person = ({ type }: peopleProps) => {
             >
                 Предложения
             </Heading>
-            {/* заменить на данные с сервера */}
-            <CardList data={productDataArray} component={ProductCard} />
+            <CardList data={recommended} component={ProductCard} />
         </VStack>
     );
 };

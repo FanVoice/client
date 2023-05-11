@@ -1,7 +1,7 @@
 import { Container } from '@chakra-ui/react';
 import { Outlet } from 'react-router-dom';
 
-//Для desktop версии прописать медиазапросы max и min with
+// TODO: Для desktop версии прописать медиазапросы max и min with
 export const Root = () => {
     return (
         <Container

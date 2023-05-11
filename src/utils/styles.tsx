@@ -1,4 +1,4 @@
-//Вынесла в utils так как эти стили глобальные (используются в нескольких местах)
+// Вынесла в utils так как эти стили глобальные (используются в нескольких местах)
 
 export const goBackButtonStyles = {
     background: 'transparent',
@@ -31,9 +31,10 @@ export const h2TitleStyles = {
 };
 
 export const h3TitleStyles = {
-    p: '0',
+    p: '0 5px',
     fontSize: 'md',
     fontWeight: 'bold',
+    textAlign: 'center',
 };
 
 export const h2TitleWithButtonStyles = {
@@ -42,6 +43,11 @@ export const h2TitleWithButtonStyles = {
     position: 'relative',
     width: '328px',
     textAlign: 'center',
+    height: '44px',
+};
+
+export const h4HeadingStyles = {
+    fontSize: 'md',
 };
 
 export const paragrapghStyles = {

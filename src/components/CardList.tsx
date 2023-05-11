@@ -8,7 +8,7 @@ export const CardList = <T extends {}>({
     component: React.ComponentType<{ data: T }>;
 }) => {
     return (
-        <List pt="20px" display="flex" flexDir="column" gap="20px">
+        <List pt="20px" display="flex" flexDir="column" gap="20px" w='100%'>
             
             {data?.map((card) => {
                 const Component = component;

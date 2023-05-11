@@ -4,7 +4,6 @@ import {
     Image,
     HStack,
     Text,
-    List,
     Tab,
     TabList,
     TabPanel,
@@ -12,7 +11,7 @@ import {
     Tabs,
 } from '@chakra-ui/react';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
-import { cardImageStyles, h4HeadingStyles, logoStyles } from './styles';
+import { clubImageStyles } from './styles';
 import {
     tabsStyles,
     tabListStyles,
@@ -20,26 +19,34 @@ import {
     tabPanelAllCards,
     tabPanelCategories,
 } from '../Main/styles';
+import noPhoto from '../../assets/no-image.png';
 import { PersonCard } from '../../components/PersonCard/PersonCard';
-import { paragrapghStyles } from '../../utils/styles';
+import { h4HeadingStyles, paragrapghStyles } from '../../utils/styles';
 import { HeaderWithLogo } from '../../components/HeaderWithLogo/HeaderWithLogo';
 import { CardList } from '../../components/CardList';
-import { personDataArray, productDataArray } from '../../utils/MockData';
+import { personDataArray } from '../../utils/MockData';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Api from '../../utils/api';
-import { clubDataType } from '../../utils/types';
+import { clubDataType, productDataType } from '../../utils/types';
 
-export const Club = ({}) => {
+export const Club = () => {
     const { slug } = useParams<{ slug?: string }>() || {};
     const api = new Api();
     const [club, setClub] = useState<clubDataType | undefined>(undefined);
+    const [recommendedItems, setRecommendedItems] = useState<productDataType[]>([]);
+    // TODO: Пока нет роута чтобы достать рекомендованных спортсменов
+    // TODO: const [recommendedAthletes, setRecommendedAthletes] = useState<productDataType[]>([]);
 
     useEffect(() => {
         api.getClubInfo(slug).then((res) => {
             if (res?.data) {
-                console.log(res)
                 setClub(res.data);
+            }
+        });
+        api.getRecommendedItems('clubs', slug).then((res) => {
+            if (res?.data) {
+                setRecommendedItems(res?.data);
             }
         });
     }, []);
@@ -49,9 +56,9 @@ export const Club = ({}) => {
             <HeaderWithLogo />
             <HStack w="100%">
                 <Image
-                    src={club?.photo}
-                    alt={club?.name}
-                    sx={cardImageStyles}
+                    src={club?.photo || noPhoto}
+                    alt={club?.photo ? club?.name : 'Изображение недоступно'}
+                    sx={clubImageStyles}
                     pr="20px"
                 />
                 <VStack
@@ -60,9 +67,9 @@ export const Club = ({}) => {
                     justifyContent="space-between"
                 >
                     <Heading as="h4" sx={h4HeadingStyles}>
-                    {club?.name}
+                        {club?.name}
                     </Heading>
-                    {/* Пока бэк не умеет такое отдавать, поэтому прячу */}
+                    {/* TODO: Пока бэк не умеет такое отдавать, поэтому прячу */}
                     {/* <HStack>
                         <Text sx={paragrapghStyles}>Основан: </Text>
                         <Text sx={paragrapghStyles}>
@@ -83,12 +90,11 @@ export const Club = ({}) => {
                 </TabList>
                 <TabPanels>
                     <TabPanel sx={tabPanelAllCards}>
-                        {/* заменить на данные с сервера */}
+                        {/* TODO: заменить на данные с сервера, пока бэк не умеет делать рекомендации*/}
                         <CardList data={personDataArray} component={PersonCard} />
                     </TabPanel>
                     <TabPanel sx={tabPanelCategories}>
-                        {/* заменить на данные с сервера */}
-                        <CardList data={productDataArray} component={ProductCard} />
+                        <CardList data={recommendedItems} component={ProductCard} />
                     </TabPanel>
                 </TabPanels>
             </Tabs>

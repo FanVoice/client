@@ -1,0 +1,44 @@
+.slider {
+  width: 100%;
+  height: 318px;
+  margin: 15px 0;
+  object-fit: cover;
+}
+
+.slick-slider {
+  width: 100%;
+  height: 318px;
+  margin: 0;
+}
+
+.slick-slide img {
+  height: 318px;
+  object-fit: cover;
+}
+
+.slick-dots {
+  position: absolute;
+  bottom: -42px;
+}
+
+.slick-dots li {
+  padding: 0;
+  margin: 0;
+  width: 10px;
+  height: 10px;
+  margin-right: 15px;
+}
+
+.slick-dots li button:before,
+.slick-dots li button {
+
+  padding: 0;
+  margin: 0;
+  position: relative;
+  color: #DD6B20;
+  display: block;
+}
+
+.slick-dots li.slick-active button:before {
+  color: #DD6B20;
+}

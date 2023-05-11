@@ -32,6 +32,11 @@ export const Sports = () => {
             .catch(() => setIsError(true))
             .finally(() => setIsLoading(false));
     }, []);
+
+    const onClick = (id: string | number) => {
+        navigate(`/categories/sports/${id}`);
+    };
+
     const render = () => {
         if (isLoading) {
             return <AppSpinner />;
@@ -40,11 +45,11 @@ export const Sports = () => {
                 return (
                     <CategoryCard
                         key={sport.id}
+                        id={sport.id}
                         src={sport.photo}
                         title={sport.name}
-                        onClick={() => {
-                            navigate(`/categories/sports/${sport.id}`);
-                        }}
+                        alt={sport.photo ? sport.name : 'Изображение недоступно'}
+                        onClick={onClick}
                     />
                 );
             });

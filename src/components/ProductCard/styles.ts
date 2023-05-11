@@ -1,6 +1,7 @@
 export const cardStyles = {
     height: '293px',
     cursor: 'pointer',
+    w: '100%',
 };
 
 export const cardImageStyles = {
@@ -9,6 +10,7 @@ export const cardImageStyles = {
     margin: '0',
     borderTopStartRadius: '6px',
     borderTopEndRadius: '6px',
+    objectFit: 'cover',
 };
 
 export const cardHeadingStyles = {

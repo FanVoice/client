@@ -6,8 +6,3 @@ export const cardImageStyles = {
     marginTop: '50px !important',
     marginBottom:"35px !important"
 };
-
-
-export const h4HeadingStyles = {
-    fontSize: 'md',
-}

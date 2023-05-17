@@ -4,5 +4,6 @@ export const cardImageStyles = {
     margin: '0',
     borderRadius: '8px',
     marginTop: '50px !important',
-    marginBottom:"35px !important"
+    marginBottom:"35px !important",
+    objectFit: 'cover'
 };
